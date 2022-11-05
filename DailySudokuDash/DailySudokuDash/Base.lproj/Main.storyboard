@@ -25,16 +25,21 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cfd-Hw-HZD">
-                                <rect key="frame" x="119" y="252" width="152" height="31"/>
+                                <rect key="frame" x="56" y="304" width="278" height="52"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Play Today's Puzzle"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3b3-DY-yRY">
-                                <rect key="frame" x="127" y="291" width="137" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Play Past Puzzles"/>
+                                <buttonConfiguration key="configuration" style="filled" cornerStyle="capsule">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="Play Today's Puzzle">
+                                            <attributes>
+                                                <font key="NSFont" size="24" name="Helvetica"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="clickPlayToday:" destination="BYZ-38-t0r" eventType="touchUpInside" id="H1h-Tm-kIV"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Today's Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ion-l0-Vvs">
                                 <rect key="frame" x="145" y="223" width="101" height="21"/>
@@ -43,19 +48,36 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3b3-DY-yRY">
+                                <rect key="frame" x="56" y="396" width="278" height="52"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" cornerStyle="capsule">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="Play Past Puzzles">
+                                            <attributes>
+                                                <font key="NSFont" size="24" name="Helvetica"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="clickPlayPast:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GLg-HR-jkW"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="qyl-Hl-JRP"/>
                     <connections>
-                        <segue destination="4XI-1d-tND" kind="show" id="NTX-nL-Pqv"/>
-                        <segue destination="Ecs-hN-9uy" kind="show" id="5U8-6l-naO"/>
+                        <segue destination="4XI-1d-tND" kind="show" identifier="homeToDailyPuzzle" id="NTX-nL-Pqv"/>
+                        <segue destination="Ecs-hN-9uy" kind="show" identifier="homeToPastPuzzles" id="5U8-6l-naO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1717" y="-170"/>
+            <point key="canvasLocation" x="1716.9230769230769" y="-170.61611374407582"/>
         </scene>
         <!--Past Puzzles View Controller-->
         <scene sceneID="Yyb-J1-P2V">
@@ -65,20 +87,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="inline" translatesAutoresizingMaskIntoConstraints="NO" id="eUD-hp-6pK">
-                                <rect key="frame" x="0.0" y="385" width="390" height="162"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <date key="minimumDate" timeIntervalSinceReferenceDate="688989600">
-                                    <!--2022-11-01 10:00:00 +0000-->
-                                </date>
-                            </datePicker>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Past Puzzles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3dr-ug-Obc">
-                                <rect key="frame" x="101" y="188" width="188" height="42"/>
+                                <rect key="frame" x="101" y="105" width="188" height="42"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="35"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="inline" translatesAutoresizingMaskIntoConstraints="NO" id="eUD-hp-6pK">
+                                <rect key="frame" x="0.0" y="214" width="390" height="375"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <date key="minimumDate" timeIntervalSinceReferenceDate="688989600">
+                                    <!--2022-11-01 10:00:00 +0000-->
+                                </date>
+                            </datePicker>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="dCS-aD-MdM"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -90,7 +112,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pyF-vf-9TH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2549" y="216"/>
+            <point key="canvasLocation" x="2547.6923076923076" y="215.40284360189571"/>
         </scene>
         <!--Puzzle View Controller-->
         <scene sceneID="XjO-ig-AQf">
@@ -101,66 +123,87 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4ng-I1-wEj">
-                                <rect key="frame" x="146" y="88" width="65" height="42"/>
+                                <rect key="frame" x="163" y="88" width="64.333333333333314" height="42"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="35"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="DCk-1N-vfl">
-                                <rect key="frame" x="16" y="201" width="358" height="335"/>
+                            <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" contentInsetAdjustmentBehavior="never" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="DCk-1N-vfl">
+                                <rect key="frame" x="16" y="201" width="358" height="358"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="upW-dQ-qMu">
-                                    <size key="itemSize" width="128" height="128"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="upW-dQ-qMu">
+                                    <size key="itemSize" width="268" height="291"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Tmy-BU-VPl">
-                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="Tmy-BU-VPl" customClass="SudokuGridCell" customModule="DailySudokuDash" customModuleProvider="target">
+                                        <rect key="frame" x="44" y="0.0" width="270" height="270"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="cZJ-5P-wL2">
-                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="270" height="270"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="3" verticalHuggingPriority="3" horizontalCompressionResistancePriority="3" verticalCompressionResistancePriority="3" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b9u-zO-JQh">
+                                                    <rect key="frame" x="8" y="8" width="254" height="254"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="b9u-zO-JQh" firstAttribute="leading" secondItem="cZJ-5P-wL2" secondAttribute="leadingMargin" id="QqW-IR-djQ"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="b9u-zO-JQh" secondAttribute="trailing" id="VL5-bI-soA"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="b9u-zO-JQh" secondAttribute="bottom" id="VVX-79-3FH"/>
+                                                <constraint firstItem="b9u-zO-JQh" firstAttribute="top" secondItem="cZJ-5P-wL2" secondAttribute="topMargin" id="t6n-vi-e5G"/>
+                                            </constraints>
                                         </collectionViewCellContentView>
+                                        <size key="customSize" width="270" height="270"/>
+                                        <connections>
+                                            <outlet property="numberLabel" destination="b9u-zO-JQh" id="hsr-fA-cdu"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QuR-3m-jGA" customClass="SudokuGrid" customModule="DailySudokuDash" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="178" width="390" height="399"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Timer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QXF-Qi-xlX">
-                                <rect key="frame" x="169" y="172" width="44" height="21"/>
+                                <rect key="frame" x="173" y="129" width="44" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Csb-n9-oLT">
-                                <rect key="frame" x="159" y="589" width="66" height="31"/>
+                                <rect key="frame" x="143" y="589" width="82" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Delete"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dJe-Vk-LXb">
-                                <rect key="frame" x="72" y="589" width="63" height="31"/>
+                                <rect key="frame" x="43" y="589" width="92" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Notes"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TDq-pW-rWn">
-                                <rect key="frame" x="268" y="585" width="51" height="31"/>
+                                <rect key="frame" x="254" y="585" width="65" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Hint"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KZU-82-4jU">
-                                <rect key="frame" x="312" y="167" width="58" height="31"/>
+                                <rect key="frame" x="301" y="125" width="73" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Clear"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="27M-KB-DFf">
-                                <rect key="frame" x="23" y="162" width="107" height="31"/>
+                                <rect key="frame" x="0.0" y="125" width="135" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Check Board"/>
@@ -221,12 +264,14 @@
                     </view>
                     <navigationItem key="navigationItem" id="G4x-FL-dmS"/>
                     <connections>
+                        <outlet property="collectionView" destination="DCk-1N-vfl" id="cLk-EU-O7j"/>
+                        <outlet property="sudokuGrid" destination="QuR-3m-jGA" id="6yl-Y0-0Bj"/>
                         <segue destination="Bnf-A2-rwM" kind="show" id="f7B-KN-USK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yJB-v1-0OY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3345" y="-432"/>
+            <point key="canvasLocation" x="3344.6153846153843" y="-432.22748815165875"/>
         </scene>
         <!--Win View Controller-->
         <scene sceneID="nee-TA-UFS">
@@ -275,6 +320,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Wh5-cA-pwQ" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="4Dc-mx-0wI">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
@@ -307,7 +353,7 @@
                         <viewLayoutGuide key="safeArea" id="elN-k7-2cT"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="My Info" id="uvy-Xd-PTA"/>
+                    <tabBarItem key="tabBarItem" title="My Info" image="info.circle.fill" catalog="system" id="uvy-Xd-PTA"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eX1-RY-E4Y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -344,7 +390,7 @@
                         <viewLayoutGuide key="safeArea" id="JRm-XF-Jur"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Leaderboard" id="781-Yo-rHY"/>
+                    <tabBarItem key="tabBarItem" title="Leaderboard" image="leaderboard_icon" id="781-Yo-rHY"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nvp-Pf-kNQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -354,7 +400,7 @@
         <scene sceneID="kgp-nu-dko">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="6ar-hb-5VQ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" id="4cJ-rw-MHp"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="house.fill" catalog="system" id="4cJ-rw-MHp"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Lhb-mO-ywh">
                         <rect key="frame" x="0.0" y="44" width="390" height="44"/>
@@ -380,6 +426,9 @@
         <segue reference="amc-FL-4TB"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="house.fill" catalog="system" width="128" height="106"/>
+        <image name="info.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="leaderboard_icon" width="25" height="25"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

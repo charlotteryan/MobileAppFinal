@@ -7,23 +7,64 @@
 
 import UIKit
 
-class PuzzleViewController: UIViewController {
-
+class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var sudokuGrid: SudokuGrid!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        setUpCollectionView()
+        drawGrid()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    // ***********************
+    // *** COLLECTION VIEW ***
+    // ***********************
+    
+    // Returns the number of items in the collection view
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 81 // 9x9 grid
     }
-    */
-
+    
+    // Get cell at a given point
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SudokuGridCell
+        
+        // TODO: load grid with puzzle info
+        cell.numberLabel.text = String(indexPath.row)
+        
+        return cell
+    }
+    
+    // Selected a cell
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        
+        // TODO: change highlight
+        cell?.backgroundColor = UIColor(red: 0.4902, green: 0.7451, blue: 0.9294, alpha: 1.0) /* light blue */
+    }
+    
+    // https://www.kodeco.com/18895088-uicollectionview-tutorial-getting-started#toc-anchor-013
+    // Tells the layout the size of a given cell
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let widthPerItem = collectionView.frame.width / 9
+        
+        return CGSize(width: widthPerItem, height: widthPerItem)
+    }
+    
+    func setUpCollectionView() {
+        collectionView.dataSource = self
+        collectionView.delegate = self
+    }
+    
+    // ****
+    // MISC
+    
+    // Provide collectionView info so sudoku grid can be drawn
+    func drawGrid() {
+        sudokuGrid.gridOrigin = collectionView.convert(collectionView.bounds.origin, to: sudokuGrid)
+        sudokuGrid.gridSize = collectionView.frame.width
+    }
 }

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		596A284F2913283F0072443A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596A284E2913283F0072443A /* AppDelegate.swift */; };
 		596A28512913283F0072443A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596A28502913283F0072443A /* SceneDelegate.swift */; };
-		596A28532913283F0072443A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596A28522913283F0072443A /* ViewController.swift */; };
 		596A28562913283F0072443A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 596A28542913283F0072443A /* Main.storyboard */; };
 		596A2858291328400072443A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 596A2857291328400072443A /* Assets.xcassets */; };
 		596A285B291328400072443A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 596A2859291328400072443A /* LaunchScreen.storyboard */; };
@@ -19,13 +18,14 @@
 		596A286B2913325B0072443A /* LeaderboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596A286A2913325B0072443A /* LeaderboardViewController.swift */; };
 		596A286D291332880072443A /* MyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596A286C291332880072443A /* MyInfoViewController.swift */; };
 		596A286F291332CA0072443A /* WinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596A286E291332CA0072443A /* WinViewController.swift */; };
+		59E4F5BD2915C2A300C51FD0 /* SudokuGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E4F5BC2915C2A300C51FD0 /* SudokuGridCell.swift */; };
+		59E4F5BF291622C000C51FD0 /* SudokuGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E4F5BE291622C000C51FD0 /* SudokuGrid.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		596A284B2913283F0072443A /* DailySudokuDash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DailySudokuDash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		596A284E2913283F0072443A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		596A28502913283F0072443A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		596A28522913283F0072443A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		596A28552913283F0072443A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		596A2857291328400072443A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		596A285A291328400072443A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -36,6 +36,8 @@
 		596A286A2913325B0072443A /* LeaderboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardViewController.swift; sourceTree = "<group>"; };
 		596A286C291332880072443A /* MyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewController.swift; sourceTree = "<group>"; };
 		596A286E291332CA0072443A /* WinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinViewController.swift; sourceTree = "<group>"; };
+		59E4F5BC2915C2A300C51FD0 /* SudokuGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuGridCell.swift; sourceTree = "<group>"; };
+		59E4F5BE291622C000C51FD0 /* SudokuGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuGrid.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,7 +72,6 @@
 			children = (
 				596A284E2913283F0072443A /* AppDelegate.swift */,
 				596A28502913283F0072443A /* SceneDelegate.swift */,
-				596A28522913283F0072443A /* ViewController.swift */,
 				596A28542913283F0072443A /* Main.storyboard */,
 				596A286E291332CA0072443A /* WinViewController.swift */,
 				596A286C291332880072443A /* MyInfoViewController.swift */,
@@ -78,6 +79,8 @@
 				596A2868291332280072443A /* PastPuzzlesViewController.swift */,
 				596A2864291331A10072443A /* HomeViewController.swift */,
 				596A2866291331FB0072443A /* PuzzleViewController.swift */,
+				59E4F5BC2915C2A300C51FD0 /* SudokuGridCell.swift */,
+				59E4F5BE291622C000C51FD0 /* SudokuGrid.swift */,
 				596A2857291328400072443A /* Assets.xcassets */,
 				596A2859291328400072443A /* LaunchScreen.storyboard */,
 				596A285C291328400072443A /* Info.plist */,
@@ -158,12 +161,13 @@
 			files = (
 				596A286B2913325B0072443A /* LeaderboardViewController.swift in Sources */,
 				596A2869291332280072443A /* PastPuzzlesViewController.swift in Sources */,
+				59E4F5BF291622C000C51FD0 /* SudokuGrid.swift in Sources */,
 				596A2867291331FB0072443A /* PuzzleViewController.swift in Sources */,
-				596A28532913283F0072443A /* ViewController.swift in Sources */,
 				596A284F2913283F0072443A /* AppDelegate.swift in Sources */,
 				596A28512913283F0072443A /* SceneDelegate.swift in Sources */,
 				596A286F291332CA0072443A /* WinViewController.swift in Sources */,
 				596A286D291332880072443A /* MyInfoViewController.swift in Sources */,
+				59E4F5BD2915C2A300C51FD0 /* SudokuGridCell.swift in Sources */,
 				596A2865291331A10072443A /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
