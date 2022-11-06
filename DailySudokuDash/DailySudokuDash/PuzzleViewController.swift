@@ -12,10 +12,15 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var sudokuGrid: SudokuGrid!
     
+    var puzzleData: [GridSquare] = []
+    
+    var selectedCell: SudokuGridCell?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         setUpCollectionView()
+        fetchPuzzleData()
         drawGrid()
     }
     
@@ -33,17 +38,33 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SudokuGridCell
         
         // TODO: load grid with puzzle info
-        cell.numberLabel.text = String(indexPath.row)
+        let cellData = puzzleData[indexPath.row]
+        if let val = cellData.value {
+            cell.numberLabel.text = String(val)
+        }
+        if (!cellData.canEdit) {
+            cell.numberLabel.textColor = UIColor.blue
+        }
         
         return cell
     }
     
     // Selected a cell
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
+        let thisCell = collectionView.cellForItem(at: indexPath) as! SudokuGridCell
         
-        // TODO: change highlight
-        cell?.backgroundColor = UIColor(red: 0.4902, green: 0.7451, blue: 0.9294, alpha: 1.0) /* light blue */
+        // highlight selected cell
+        thisCell.backgroundColor = UIColor(red: 0.4902, green: 0.7451, blue: 0.9294, alpha: 1.0) /* light blue */
+        
+        if let pastSelected = selectedCell {
+            if (pastSelected == thisCell) {
+                return
+            }
+            // clear past cell highlight
+            pastSelected.backgroundColor = UIColor.clear
+        }
+        
+        selectedCell = thisCell
     }
     
     // https://www.kodeco.com/18895088-uicollectionview-tutorial-getting-started#toc-anchor-013
@@ -59,12 +80,24 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
         collectionView.delegate = self
     }
     
-    // ****
-    // MISC
+    // ************
+    // *** MISC ***
+    // ************
     
-    // Provide collectionView info so sudoku grid can be drawn
     func drawGrid() {
         sudokuGrid.gridOrigin = collectionView.convert(collectionView.bounds.origin, to: sudokuGrid)
         sudokuGrid.gridSize = collectionView.frame.width
+    }
+    
+    func fetchPuzzleData() {
+        let g1 = GridSquare(value: nil, canEdit: true)
+        let g2 = GridSquare(value: 5, canEdit: false)
+        let g3 = GridSquare(value: 7, canEdit: false)
+        // TODO: currently, just creating empty sudoku grid
+        for _ in 1 ... 27 {
+            puzzleData.append(g1)
+            puzzleData.append(g2)
+            puzzleData.append(g3)
+        }
     }
 }

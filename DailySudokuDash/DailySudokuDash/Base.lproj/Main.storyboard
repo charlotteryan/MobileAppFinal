@@ -146,7 +146,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="270" height="270"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="3" verticalHuggingPriority="3" horizontalCompressionResistancePriority="3" verticalCompressionResistancePriority="3" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b9u-zO-JQh">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="3" verticalHuggingPriority="3" horizontalCompressionResistancePriority="3" verticalCompressionResistancePriority="3" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b9u-zO-JQh">
                                                     <rect key="frame" x="8" y="8" width="254" height="254"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
