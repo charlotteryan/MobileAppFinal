@@ -9,6 +9,7 @@ import UIKit
 
 class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var sudokuGrid: SudokuGrid!
     
@@ -16,13 +17,264 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     var selectedCell: SudokuGridCell?
     
+    var selectedNumber: String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        self.title = "Today's Game"
         setUpCollectionView()
         fetchPuzzleData()
         drawGrid()
     }
+    
+    // ***********************
+    // *** STACK VIEW ***
+    // ***********************
+    
+    @IBOutlet weak var one: UIButton!
+    @IBOutlet weak var two: UIButton!
+    @IBOutlet weak var three: UIButton!
+    @IBOutlet weak var four: UIButton!
+    @IBOutlet weak var five: UIButton!
+    @IBOutlet weak var six: UIButton!
+    @IBOutlet weak var seven: UIButton!
+    @IBOutlet weak var eight: UIButton!
+    @IBOutlet weak var nine: UIButton!
+    
+    
+    @IBAction func onePressed(_ sender: UIButton) {
+        selectedNumber = "1"
+        
+        print("titleLabel")
+        print(sender.titleLabel!.text!)
+        print("selectedNumber: ")
+        print(selectedNumber!)
+        
+        if sender.titleLabel!.text! == selectedNumber {
+            sender.backgroundColor = UIColor(red: 255, green: 255, blue: 0, alpha: 0.5)
+            print("background should be yellow")
+            two.backgroundColor = .clear
+            three.backgroundColor = .clear
+            four.backgroundColor = .clear
+            five.backgroundColor = .clear
+            six.backgroundColor = .clear
+            seven.backgroundColor = .clear
+            eight.backgroundColor = .clear
+            nine.backgroundColor = .clear
+        }
+        else {
+            sender.backgroundColor = .clear
+            print("not equal")
+        }
+    }
+    @IBAction func twoPressed(_ sender: UIButton) {
+        selectedNumber = "2"
+        
+        print("titleLabel")
+        print(sender.titleLabel!.text!)
+        print("selectedNumber: ")
+        print(selectedNumber!)
+        
+        if sender.titleLabel!.text! == selectedNumber {
+            sender.backgroundColor = UIColor(red: 255, green: 255, blue: 0, alpha: 0.5)
+            print("background should be yellow")
+            one.backgroundColor = .clear
+            three.backgroundColor = .clear
+            four.backgroundColor = .clear
+            five.backgroundColor = .clear
+            six.backgroundColor = .clear
+            seven.backgroundColor = .clear
+            eight.backgroundColor = .clear
+            nine.backgroundColor = .clear
+        }
+        else {
+            sender.backgroundColor = .clear
+            print("not equal")
+        }
+    }
+    
+    @IBAction func threePressed(_ sender: UIButton) {
+        
+        selectedNumber = "3"
+
+        print("titleLabel")
+        print(sender.titleLabel!.text!)
+        print("selectedNumber: ")
+        print(selectedNumber!)
+
+        if sender.titleLabel!.text! == selectedNumber {
+            sender.backgroundColor = UIColor(red: 255, green: 255, blue: 0, alpha: 0.5)
+            print("background should be yellow")
+            two.backgroundColor = .clear
+            one.backgroundColor = .clear
+            four.backgroundColor = .clear
+            five.backgroundColor = .clear
+            six.backgroundColor = .clear
+            seven.backgroundColor = .clear
+            eight.backgroundColor = .clear
+            nine.backgroundColor = .clear
+        }
+        else {
+            sender.backgroundColor = .clear
+            print("not equal")
+        }
+    }
+    @IBAction func fourPressed(_ sender: UIButton) {
+        selectedNumber = "4"
+
+        print("titleLabel")
+        print(sender.titleLabel!.text!)
+        print("selectedNumber: ")
+        print(selectedNumber!)
+
+        if sender.titleLabel!.text! == selectedNumber {
+            sender.backgroundColor = UIColor(red: 255, green: 255, blue: 0, alpha: 0.5)
+            print("background should be yellow")
+            two.backgroundColor = .clear
+            one.backgroundColor = .clear
+            three.backgroundColor = .clear
+            five.backgroundColor = .clear
+            six.backgroundColor = .clear
+            seven.backgroundColor = .clear
+            eight.backgroundColor = .clear
+            nine.backgroundColor = .clear
+        }
+        else {
+            sender.backgroundColor = .clear
+            print("not equal")
+        }
+    }
+    @IBAction func fivePressed(_ sender: UIButton) {
+        selectedNumber = "5"
+
+        print("titleLabel")
+        print(sender.titleLabel!.text!)
+        print("selectedNumber: ")
+        print(selectedNumber!)
+
+        if sender.titleLabel!.text! == selectedNumber {
+            sender.backgroundColor = UIColor(red: 255, green: 255, blue: 0, alpha: 0.5)
+            print("background should be yellow")
+            two.backgroundColor = .clear
+            one.backgroundColor = .clear
+            four.backgroundColor = .clear
+            three.backgroundColor = .clear
+            six.backgroundColor = .clear
+            seven.backgroundColor = .clear
+            eight.backgroundColor = .clear
+            nine.backgroundColor = .clear
+        }
+        else {
+            sender.backgroundColor = .clear
+            print("not equal")
+        }
+    }
+    @IBAction func sixPressed(_ sender: UIButton) {
+        selectedNumber = "6"
+
+        print("titleLabel")
+        print(sender.titleLabel!.text!)
+        print("selectedNumber: ")
+        print(selectedNumber!)
+
+        if sender.titleLabel!.text! == selectedNumber {
+            sender.backgroundColor = UIColor(red: 255, green: 255, blue: 0, alpha: 0.5)
+            print("background should be yellow")
+            two.backgroundColor = .clear
+            one.backgroundColor = .clear
+            four.backgroundColor = .clear
+            five.backgroundColor = .clear
+            three.backgroundColor = .clear
+            seven.backgroundColor = .clear
+            eight.backgroundColor = .clear
+            nine.backgroundColor = .clear
+        }
+        else {
+            sender.backgroundColor = .clear
+            print("not equal")
+        }
+    }
+    @IBAction func sevenPressed(_ sender: UIButton) {
+        selectedNumber = "7"
+
+        print("titleLabel")
+        print(sender.titleLabel!.text!)
+        print("selectedNumber: ")
+        print(selectedNumber!)
+
+        if sender.titleLabel!.text! == selectedNumber {
+            sender.backgroundColor = UIColor(red: 255, green: 255, blue: 0, alpha: 0.5)
+            print("background should be yellow")
+            two.backgroundColor = .clear
+            one.backgroundColor = .clear
+            four.backgroundColor = .clear
+            five.backgroundColor = .clear
+            six.backgroundColor = .clear
+            three.backgroundColor = .clear
+            eight.backgroundColor = .clear
+            nine.backgroundColor = .clear
+        }
+        else {
+            sender.backgroundColor = .clear
+            print("not equal")
+        }
+    }
+    @IBAction func eightPressed(_ sender: UIButton) {
+        selectedNumber = "8"
+
+        print("titleLabel")
+        print(sender.titleLabel!.text!)
+        print("selectedNumber: ")
+        print(selectedNumber!)
+
+        if sender.titleLabel!.text! == selectedNumber {
+            sender.backgroundColor = UIColor(red: 255, green: 255, blue: 0, alpha: 0.5)
+            print("background should be yellow")
+            two.backgroundColor = .clear
+            one.backgroundColor = .clear
+            four.backgroundColor = .clear
+            five.backgroundColor = .clear
+            six.backgroundColor = .clear
+            seven.backgroundColor = .clear
+            three.backgroundColor = .clear
+            nine.backgroundColor = .clear
+        }
+        else {
+            sender.backgroundColor = .clear
+            print("not equal")
+        }
+    }
+    @IBAction func ninePressed(_ sender: UIButton) {
+        selectedNumber = "9"
+
+        print("titleLabel")
+        print(sender.titleLabel!.text!)
+        print("selectedNumber: ")
+        print(selectedNumber!)
+
+        if sender.titleLabel!.text! == selectedNumber {
+            sender.backgroundColor = UIColor(red: 255, green: 255, blue: 0, alpha: 0.5)
+            print("background should be yellow")
+            two.backgroundColor = .clear
+            one.backgroundColor = .clear
+            four.backgroundColor = .clear
+            five.backgroundColor = .clear
+            six.backgroundColor = .clear
+            seven.backgroundColor = .clear
+            eight.backgroundColor = .clear
+            three.backgroundColor = .clear
+        }
+        else {
+            sender.backgroundColor = .clear
+            print("not equal")
+        }
+    }
+    
+    
+    
+    
+    
     
     // ***********************
     // *** COLLECTION VIEW ***

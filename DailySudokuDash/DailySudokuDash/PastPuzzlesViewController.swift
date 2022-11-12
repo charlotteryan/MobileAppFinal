@@ -11,7 +11,7 @@ class PastPuzzlesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.title = "Past Puzzles"
         // Do any additional setup after loading the view.
     }
     
