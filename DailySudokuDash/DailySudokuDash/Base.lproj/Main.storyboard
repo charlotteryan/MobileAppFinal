@@ -122,12 +122,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4ng-I1-wEj">
-                                <rect key="frame" x="163" y="88" width="64" height="42"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="35"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="never" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="DCk-1N-vfl">
                                 <rect key="frame" x="16" y="201" width="358" height="358"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="upW-dQ-qMu">
@@ -196,7 +190,7 @@
                                 <buttonConfiguration key="configuration" style="plain" title="Hint"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KZU-82-4jU">
-                                <rect key="frame" x="300.66666666666669" y="125" width="73.333333333333314" height="31"/>
+                                <rect key="frame" x="316" y="125" width="58" height="31"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Clear"/>
                             </button>
@@ -282,6 +276,15 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BZT-4s-5Ad">
+                                <rect key="frame" x="155" y="149" width="77" height="28"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="77" id="6VN-5V-fYl"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="NqD-Py-rax"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -291,25 +294,24 @@
                             <constraint firstItem="27M-KB-DFf" firstAttribute="leading" secondItem="QuR-3m-jGA" secondAttribute="leading" id="4sO-Og-7Ng"/>
                             <constraint firstItem="NqD-Py-rax" firstAttribute="trailing" secondItem="TDq-pW-rWn" secondAttribute="trailing" constant="71" id="5hI-Mr-kWM"/>
                             <constraint firstItem="TDq-pW-rWn" firstAttribute="top" secondItem="DCk-1N-vfl" secondAttribute="bottom" constant="26" id="6fm-Dz-Kab"/>
+                            <constraint firstItem="QuR-3m-jGA" firstAttribute="top" secondItem="BZT-4s-5Ad" secondAttribute="bottom" constant="1" id="6is-Vd-pxS"/>
                             <constraint firstItem="27M-KB-DFf" firstAttribute="leading" secondItem="NqD-Py-rax" secondAttribute="leading" id="7G7-aM-60b"/>
+                            <constraint firstItem="BZT-4s-5Ad" firstAttribute="top" secondItem="NqD-Py-rax" secondAttribute="top" constant="61" id="9Sx-zL-5FT"/>
                             <constraint firstItem="TDq-pW-rWn" firstAttribute="top" secondItem="QuR-3m-jGA" secondAttribute="bottom" constant="8" id="AT9-2b-bka"/>
                             <constraint firstItem="QuR-3m-jGA" firstAttribute="top" secondItem="27M-KB-DFf" secondAttribute="bottom" constant="22" id="AbT-bC-1Hf"/>
                             <constraint firstItem="QuR-3m-jGA" firstAttribute="centerX" secondItem="DCk-1N-vfl" secondAttribute="centerX" id="D91-NT-UM5"/>
-                            <constraint firstItem="4ng-I1-wEj" firstAttribute="leading" secondItem="27M-KB-DFf" secondAttribute="trailing" constant="28" id="DIm-UD-hjs"/>
                             <constraint firstItem="dJe-Vk-LXb" firstAttribute="baseline" secondItem="Csb-n9-oLT" secondAttribute="baseline" id="FJv-5S-lTT"/>
                             <constraint firstItem="KZU-82-4jU" firstAttribute="trailing" secondItem="DCk-1N-vfl" secondAttribute="trailing" id="FYc-nK-5xg"/>
                             <constraint firstItem="dJe-Vk-LXb" firstAttribute="leading" secondItem="yU1-3K-evJ" secondAttribute="leading" id="Kkr-5R-y1J"/>
                             <constraint firstItem="dJe-Vk-LXb" firstAttribute="leading" secondItem="NqD-Py-rax" secondAttribute="leading" constant="43" id="LTP-cq-sTb"/>
                             <constraint firstItem="DCk-1N-vfl" firstAttribute="top" secondItem="KZU-82-4jU" secondAttribute="bottom" constant="45" id="N7V-s3-4SM"/>
+                            <constraint firstItem="BZT-4s-5Ad" firstAttribute="leading" secondItem="27M-KB-DFf" secondAttribute="trailing" constant="20" id="NCR-8K-VkI"/>
                             <constraint firstItem="TDq-pW-rWn" firstAttribute="leading" secondItem="Csb-n9-oLT" secondAttribute="trailing" constant="29" id="NHc-nI-JkG"/>
                             <constraint firstItem="Csb-n9-oLT" firstAttribute="leading" secondItem="dJe-Vk-LXb" secondAttribute="trailing" constant="8" id="NdX-M4-vx3"/>
                             <constraint firstItem="QXF-Qi-xlX" firstAttribute="centerX" secondItem="DCk-1N-vfl" secondAttribute="centerX" id="QK5-Tg-XCD"/>
-                            <constraint firstItem="4ng-I1-wEj" firstAttribute="centerX" secondItem="QXF-Qi-xlX" secondAttribute="centerX" id="S9N-Jn-32a"/>
                             <constraint firstItem="27M-KB-DFf" firstAttribute="trailing" secondItem="dJe-Vk-LXb" secondAttribute="trailing" id="SCK-w8-eCV"/>
                             <constraint firstItem="yU1-3K-evJ" firstAttribute="top" secondItem="dJe-Vk-LXb" secondAttribute="bottom" constant="80" id="Shj-hL-E7u"/>
                             <constraint firstItem="KZU-82-4jU" firstAttribute="baseline" secondItem="QXF-Qi-xlX" secondAttribute="firstBaseline" id="gmH-M5-OmF"/>
-                            <constraint firstItem="KZU-82-4jU" firstAttribute="leading" secondItem="4ng-I1-wEj" secondAttribute="trailing" constant="73.666666666666686" id="hQo-vl-2Yl"/>
-                            <constraint firstItem="4ng-I1-wEj" firstAttribute="top" secondItem="NqD-Py-rax" secondAttribute="top" id="iDX-kv-gWO"/>
                             <constraint firstItem="27M-KB-DFf" firstAttribute="top" secondItem="NqD-Py-rax" secondAttribute="top" constant="37" id="jtd-ep-3Zh"/>
                             <constraint firstItem="QXF-Qi-xlX" firstAttribute="leading" secondItem="27M-KB-DFf" secondAttribute="trailing" constant="38" id="ksJ-FZ-sUx"/>
                             <constraint firstItem="DCk-1N-vfl" firstAttribute="leading" secondItem="gwM-Ko-gFq" secondAttribute="leadingMargin" id="m06-tK-FCh"/>
@@ -329,6 +331,7 @@
                         <outlet property="six" destination="RjY-jE-i0M" id="WM6-uD-wAw"/>
                         <outlet property="sudokuGrid" destination="QuR-3m-jGA" id="6yl-Y0-0Bj"/>
                         <outlet property="three" destination="ydQ-02-gez" id="RNK-qf-CQC"/>
+                        <outlet property="timerLabel" destination="BZT-4s-5Ad" id="DPj-hc-uSD"/>
                         <outlet property="two" destination="1Wo-Do-3dK" id="pG1-Mg-N7B"/>
                         <segue destination="Bnf-A2-rwM" kind="show" id="f7B-KN-USK"/>
                     </connections>

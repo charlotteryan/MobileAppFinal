@@ -13,6 +13,11 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var sudokuGrid: SudokuGrid!
     
+    @IBOutlet weak var timerLabel: UILabel!
+    var timer:Timer = Timer()
+    var minutes:Int = 0
+    var seconds:Int = 0
+    
     var puzzleData: [GridSquare] = []
     
     var selectedCell: SudokuGridCell?
@@ -26,6 +31,41 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
         setUpCollectionView()
         fetchPuzzleData()
         drawGrid()
+        createTimer()
+    }
+    // ***********************
+    // *** TIMER ***
+    // ***********************
+    func createTimer() {
+        timer = Timer.scheduledTimer(
+            timeInterval: 1,
+            target: self,
+            selector: #selector(fireTimer),
+            userInfo: nil,
+            repeats: true
+        )
+    }
+    @objc func fireTimer() {
+
+        if seconds+1 == 60 {
+            minutes+=1
+            seconds = 0
+        }
+        else {
+            seconds+=1
+        }
+        var stringSec = String(describing: seconds)
+        var stringMin = String(describing: minutes)
+        if seconds == 60 {
+            stringSec = "00"
+        }
+        if seconds < 10{
+            stringSec = "0" + String(describing: seconds)
+        }
+        if minutes < 10{
+            stringMin = "0" + stringMin
+        }
+        timerLabel.text = stringMin + " : " + stringSec
     }
     
     // ***********************
@@ -270,11 +310,6 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
             print("not equal")
         }
     }
-    
-    
-    
-    
-    
     
     // ***********************
     // *** COLLECTION VIEW ***
