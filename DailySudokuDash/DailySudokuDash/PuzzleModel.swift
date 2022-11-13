@@ -8,7 +8,8 @@
 import Foundation
 
 struct GridSquare {
-    let value: Int?
+    var value: Int?
     let canEdit: Bool
-    // TODO: notes option - which numbers are filled
+    var isSelected: Bool = false
+    var noteField: [String] = ["", "", "", "", "", "", "", "", ""]
 }

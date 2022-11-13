@@ -19,10 +19,9 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
     var seconds:Int = 0
     
     var puzzleData: [GridSquare] = []
+    var selectedCellPath: IndexPath?
     
-    var selectedCell: SudokuGridCell?
-    
-    var selectedNumber: String!
+    var notesMode = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,248 +67,84 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
         timerLabel.text = stringMin + " : " + stringSec
     }
     
-    // ***********************
-    // *** STACK VIEW ***
-    // ***********************
+    // *********************
+    // *** MODIFY PUZZLE ***
+    // *********************
     
-    @IBOutlet weak var one: UIButton!
-    @IBOutlet weak var two: UIButton!
-    @IBOutlet weak var three: UIButton!
-    @IBOutlet weak var four: UIButton!
-    @IBOutlet weak var five: UIButton!
-    @IBOutlet weak var six: UIButton!
-    @IBOutlet weak var seven: UIButton!
-    @IBOutlet weak var eight: UIButton!
-    @IBOutlet weak var nine: UIButton!
-    
-    
-    @IBAction func onePressed(_ sender: UIButton) {
-        selectedNumber = "1"
+    @IBAction func selectedNumber(_ sender: UIButton) {
+        guard let numLabel = sender.titleLabel,
+              let numText = numLabel.text,
+              let num = Int(numText),
+              let selectedCellPath = selectedCellPath
+        else {
+            return
+        }
         
-        print("titleLabel")
-        print(sender.titleLabel!.text!)
-        print("selectedNumber: ")
-        print(selectedNumber!)
+        if(!puzzleData[selectedCellPath.row].canEdit) {
+            return // do not edit provided cells
+        }
         
-        if sender.titleLabel!.text! == selectedNumber {
-            sender.backgroundColor = UIColor(red: 255, green: 255, blue: 0, alpha: 0.5)
-            print("background should be yellow")
-            two.backgroundColor = .clear
-            three.backgroundColor = .clear
-            four.backgroundColor = .clear
-            five.backgroundColor = .clear
-            six.backgroundColor = .clear
-            seven.backgroundColor = .clear
-            eight.backgroundColor = .clear
-            nine.backgroundColor = .clear
+        if (!notesMode) { // normal editing mode
+            if (puzzleData[selectedCellPath.row].value == num) {
+                puzzleData[selectedCellPath.row].value = nil // erase the cell
+            }
+            else {
+                puzzleData[selectedCellPath.row].value = num
+            }
+            puzzleData[selectedCellPath.row].noteField = ["", "", "", "", "", "", "", "", ""]
         }
         else {
-            sender.backgroundColor = .clear
-            print("not equal")
+            puzzleData[selectedCellPath.row].value = nil
+            if (puzzleData[selectedCellPath.row].noteField[num-1] == numText) {
+                puzzleData[selectedCellPath.row].noteField[num-1] = ""
+            }
+            else {
+                puzzleData[selectedCellPath.row].noteField[num-1] = numText
+            }
+            
+            UIView.performWithoutAnimation {
+                collectionView.reloadItems(at: [selectedCellPath])
+            }
         }
-    }
-    @IBAction func twoPressed(_ sender: UIButton) {
-        selectedNumber = "2"
-        
-        print("titleLabel")
-        print(sender.titleLabel!.text!)
-        print("selectedNumber: ")
-        print(selectedNumber!)
-        
-        if sender.titleLabel!.text! == selectedNumber {
-            sender.backgroundColor = UIColor(red: 255, green: 255, blue: 0, alpha: 0.5)
-            print("background should be yellow")
-            one.backgroundColor = .clear
-            three.backgroundColor = .clear
-            four.backgroundColor = .clear
-            five.backgroundColor = .clear
-            six.backgroundColor = .clear
-            seven.backgroundColor = .clear
-            eight.backgroundColor = .clear
-            nine.backgroundColor = .clear
-        }
-        else {
-            sender.backgroundColor = .clear
-            print("not equal")
+    
+        UIView.performWithoutAnimation {
+            collectionView.reloadItems(at: [selectedCellPath])
         }
     }
     
-    @IBAction func threePressed(_ sender: UIButton) {
-        
-        selectedNumber = "3"
-
-        print("titleLabel")
-        print(sender.titleLabel!.text!)
-        print("selectedNumber: ")
-        print(selectedNumber!)
-
-        if sender.titleLabel!.text! == selectedNumber {
-            sender.backgroundColor = UIColor(red: 255, green: 255, blue: 0, alpha: 0.5)
-            print("background should be yellow")
-            two.backgroundColor = .clear
-            one.backgroundColor = .clear
-            four.backgroundColor = .clear
-            five.backgroundColor = .clear
-            six.backgroundColor = .clear
-            seven.backgroundColor = .clear
-            eight.backgroundColor = .clear
-            nine.backgroundColor = .clear
+    // Erase any value or notes inside the selected cell
+    @IBAction func eraseCell() {
+        guard let selectedCellPath = selectedCellPath else {
+            return
         }
-        else {
-            sender.backgroundColor = .clear
-            print("not equal")
+        if (puzzleData[selectedCellPath.row].canEdit) {
+            puzzleData[selectedCellPath.row].value = nil
+            puzzleData[selectedCellPath.row].noteField = ["", "", "", "", "", "", "", "", ""]
+            UIView.performWithoutAnimation {
+                collectionView.reloadItems(at: [selectedCellPath])
+            }
         }
     }
-    @IBAction func fourPressed(_ sender: UIButton) {
-        selectedNumber = "4"
-
-        print("titleLabel")
-        print(sender.titleLabel!.text!)
-        print("selectedNumber: ")
-        print(selectedNumber!)
-
-        if sender.titleLabel!.text! == selectedNumber {
-            sender.backgroundColor = UIColor(red: 255, green: 255, blue: 0, alpha: 0.5)
-            print("background should be yellow")
-            two.backgroundColor = .clear
-            one.backgroundColor = .clear
-            three.backgroundColor = .clear
-            five.backgroundColor = .clear
-            six.backgroundColor = .clear
-            seven.backgroundColor = .clear
-            eight.backgroundColor = .clear
-            nine.backgroundColor = .clear
-        }
-        else {
-            sender.backgroundColor = .clear
-            print("not equal")
-        }
+    
+    // Turn notes mode on and off
+    @IBAction func changeNotesMode(_ sender: UIButton) {
+        notesMode = !notesMode
+        // update button
+        if (notesMode) {sender.setTitle("Notes (on)", for: .normal)}
+        else {sender.setTitle("Notes (off)", for: .normal)}
     }
-    @IBAction func fivePressed(_ sender: UIButton) {
-        selectedNumber = "5"
-
-        print("titleLabel")
-        print(sender.titleLabel!.text!)
-        print("selectedNumber: ")
-        print(selectedNumber!)
-
-        if sender.titleLabel!.text! == selectedNumber {
-            sender.backgroundColor = UIColor(red: 255, green: 255, blue: 0, alpha: 0.5)
-            print("background should be yellow")
-            two.backgroundColor = .clear
-            one.backgroundColor = .clear
-            four.backgroundColor = .clear
-            three.backgroundColor = .clear
-            six.backgroundColor = .clear
-            seven.backgroundColor = .clear
-            eight.backgroundColor = .clear
-            nine.backgroundColor = .clear
+    
+    // Erase the contents of all editable cells
+    @IBAction func clearBoard() {
+        for i in 0...puzzleData.count-1 {
+            if (puzzleData[i].canEdit) {
+                puzzleData[i].value = nil
+                puzzleData[i].noteField = ["", "", "", "", "", "", "", "", ""]
+            }
         }
-        else {
-            sender.backgroundColor = .clear
-            print("not equal")
-        }
+        collectionView.reloadData()
     }
-    @IBAction func sixPressed(_ sender: UIButton) {
-        selectedNumber = "6"
-
-        print("titleLabel")
-        print(sender.titleLabel!.text!)
-        print("selectedNumber: ")
-        print(selectedNumber!)
-
-        if sender.titleLabel!.text! == selectedNumber {
-            sender.backgroundColor = UIColor(red: 255, green: 255, blue: 0, alpha: 0.5)
-            print("background should be yellow")
-            two.backgroundColor = .clear
-            one.backgroundColor = .clear
-            four.backgroundColor = .clear
-            five.backgroundColor = .clear
-            three.backgroundColor = .clear
-            seven.backgroundColor = .clear
-            eight.backgroundColor = .clear
-            nine.backgroundColor = .clear
-        }
-        else {
-            sender.backgroundColor = .clear
-            print("not equal")
-        }
-    }
-    @IBAction func sevenPressed(_ sender: UIButton) {
-        selectedNumber = "7"
-
-        print("titleLabel")
-        print(sender.titleLabel!.text!)
-        print("selectedNumber: ")
-        print(selectedNumber!)
-
-        if sender.titleLabel!.text! == selectedNumber {
-            sender.backgroundColor = UIColor(red: 255, green: 255, blue: 0, alpha: 0.5)
-            print("background should be yellow")
-            two.backgroundColor = .clear
-            one.backgroundColor = .clear
-            four.backgroundColor = .clear
-            five.backgroundColor = .clear
-            six.backgroundColor = .clear
-            three.backgroundColor = .clear
-            eight.backgroundColor = .clear
-            nine.backgroundColor = .clear
-        }
-        else {
-            sender.backgroundColor = .clear
-            print("not equal")
-        }
-    }
-    @IBAction func eightPressed(_ sender: UIButton) {
-        selectedNumber = "8"
-
-        print("titleLabel")
-        print(sender.titleLabel!.text!)
-        print("selectedNumber: ")
-        print(selectedNumber!)
-
-        if sender.titleLabel!.text! == selectedNumber {
-            sender.backgroundColor = UIColor(red: 255, green: 255, blue: 0, alpha: 0.5)
-            print("background should be yellow")
-            two.backgroundColor = .clear
-            one.backgroundColor = .clear
-            four.backgroundColor = .clear
-            five.backgroundColor = .clear
-            six.backgroundColor = .clear
-            seven.backgroundColor = .clear
-            three.backgroundColor = .clear
-            nine.backgroundColor = .clear
-        }
-        else {
-            sender.backgroundColor = .clear
-            print("not equal")
-        }
-    }
-    @IBAction func ninePressed(_ sender: UIButton) {
-        selectedNumber = "9"
-
-        print("titleLabel")
-        print(sender.titleLabel!.text!)
-        print("selectedNumber: ")
-        print(selectedNumber!)
-
-        if sender.titleLabel!.text! == selectedNumber {
-            sender.backgroundColor = UIColor(red: 255, green: 255, blue: 0, alpha: 0.5)
-            print("background should be yellow")
-            two.backgroundColor = .clear
-            one.backgroundColor = .clear
-            four.backgroundColor = .clear
-            five.backgroundColor = .clear
-            six.backgroundColor = .clear
-            seven.backgroundColor = .clear
-            eight.backgroundColor = .clear
-            three.backgroundColor = .clear
-        }
-        else {
-            sender.backgroundColor = .clear
-            print("not equal")
-        }
-    }
+    
     
     // ***********************
     // *** COLLECTION VIEW ***
@@ -324,34 +159,61 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SudokuGridCell
         
-        // TODO: load grid with puzzle info
+        // set selected cell path if doesn't exist yet
+        if (selectedCellPath == nil) {
+            selectedCellPath = indexPath
+            puzzleData[indexPath.row].isSelected = true
+        }
+        
         let cellData = puzzleData[indexPath.row]
-        if let val = cellData.value {
-            cell.numberLabel.text = String(val)
-        }
-        if (!cellData.canEdit) {
-            cell.numberLabel.textColor = UIColor.blue
-        }
+
+        if let val = cellData.value {cell.numberLabel.text = String(val)}
+        else {cell.numberLabel.text = ""}
+        
+        if (!cellData.canEdit) {cell.numberLabel.textColor = UIColor.blue}
+        else {cell.numberLabel.textColor = UIColor.black}
+        
+        if (cellData.isSelected) {cell.backgroundColor = UIColor(red: 0.4902, green: 0.7451, blue: 0.9294, alpha: 1.0) /* light blue */}
+        else {cell.backgroundColor = UIColor.clear}
+        
+        // note labels
+        cell.note1.text = cellData.noteField[0]
+        cell.note2.text = cellData.noteField[1]
+        cell.note3.text = cellData.noteField[2]
+        cell.note4.text = cellData.noteField[3]
+        cell.note5.text = cellData.noteField[4]
+        cell.note6.text = cellData.noteField[5]
+        cell.note7.text = cellData.noteField[6]
+        cell.note8.text = cellData.noteField[7]
+        cell.note9.text = cellData.noteField[8]
         
         return cell
     }
     
     // Selected a cell
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let thisCell = collectionView.cellForItem(at: indexPath) as! SudokuGridCell
-        
-        // highlight selected cell
-        thisCell.backgroundColor = UIColor(red: 0.4902, green: 0.7451, blue: 0.9294, alpha: 1.0) /* light blue */
-        
-        if let pastSelected = selectedCell {
-            if (pastSelected == thisCell) {
-                return
-            }
-            // clear past cell highlight
-            pastSelected.backgroundColor = UIColor.clear
+        guard let pastSelectedPath = selectedCellPath
+        else {
+            return
         }
         
-        selectedCell = thisCell
+        // if tap currently selected cell, don't change anything
+        if (pastSelectedPath == indexPath) {
+            return
+        }
+        
+        // past selected is unselected, new is selcted
+        puzzleData[pastSelectedPath.row].isSelected = false
+        puzzleData[indexPath.row].isSelected = true
+        
+        // reload the cell appearance
+        UIView.performWithoutAnimation {
+            collectionView.reloadItems(at: [pastSelectedPath])
+            collectionView.reloadItems(at: [indexPath])
+        }
+
+        // update cells
+        selectedCellPath = indexPath
     }
     
     // https://www.kodeco.com/18895088-uicollectionview-tutorial-getting-started#toc-anchor-013
@@ -367,9 +229,9 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
         collectionView.delegate = self
     }
     
-    // ************
-    // *** MISC ***
-    // ************
+    // ******************
+    // *** MISC SETUP ***
+    // ******************
     
     func drawGrid() {
         sudokuGrid.gridOrigin = collectionView.convert(collectionView.bounds.origin, to: sudokuGrid)
@@ -381,10 +243,13 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
         let g2 = GridSquare(value: 5, canEdit: false)
         let g3 = GridSquare(value: 7, canEdit: false)
         // TODO: currently, just creating empty sudoku grid
+
         for _ in 1 ... 27 {
             puzzleData.append(g1)
             puzzleData.append(g2)
             puzzleData.append(g3)
         }
     }
+    
+    
 }
