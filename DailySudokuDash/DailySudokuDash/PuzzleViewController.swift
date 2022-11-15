@@ -239,15 +239,16 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func fetchPuzzleData() {
-        let g1 = GridSquare(value: nil, canEdit: true)
-        let g2 = GridSquare(value: 5, canEdit: false)
-        let g3 = GridSquare(value: 7, canEdit: false)
-        // TODO: currently, just creating empty sudoku grid
-
-        for _ in 1 ... 27 {
-            puzzleData.append(g1)
-            puzzleData.append(g2)
-            puzzleData.append(g3)
+        let unsolvedBoard = ".23.5...94.6.7..38...23.145241.6..9..67....51.9.7.436.632.87.1...8.41.2.914......"
+        // TODO: get board string from firebase instead
+        
+        for char in unsolvedBoard {
+            if (char == ".") {
+                puzzleData.append(GridSquare(value: nil, canEdit: true))
+            }
+            else if let intVal = char.wholeNumberValue {
+                puzzleData.append(GridSquare(value: intVal, canEdit: false))
+            }
         }
     }
     
