@@ -6,13 +6,16 @@
 //
 
 import UIKit
+import Firebase
 
 class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        let ref = Database.database().reference()
+        
+        ref.child("Users/SudokuLover373/mistakesMade").setValue(109)
     }
     
     @IBAction func clickPlayToday(_ sender: Any) {

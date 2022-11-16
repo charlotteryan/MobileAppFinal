@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D4EA4D6292559ED00660FBC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2D4EA4D5292559ED00660FBC /* GoogleService-Info.plist */; };
 		596A284F2913283F0072443A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596A284E2913283F0072443A /* AppDelegate.swift */; };
 		596A28512913283F0072443A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596A28502913283F0072443A /* SceneDelegate.swift */; };
 		596A28562913283F0072443A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 596A28542913283F0072443A /* Main.storyboard */; };
@@ -21,9 +22,11 @@
 		599C87142916E690005B5F7B /* PuzzleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599C87132916E690005B5F7B /* PuzzleModel.swift */; };
 		59E4F5BD2915C2A300C51FD0 /* SudokuGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E4F5BC2915C2A300C51FD0 /* SudokuGridCell.swift */; };
 		59E4F5BF291622C000C51FD0 /* SudokuGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E4F5BE291622C000C51FD0 /* SudokuGrid.swift */; };
+		A3A22D14F37A8A632BD55728 /* Pods_DailySudokuDash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A163F5F80695FA534DF979 /* Pods_DailySudokuDash.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2D4EA4D5292559ED00660FBC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		596A284B2913283F0072443A /* DailySudokuDash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DailySudokuDash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		596A284E2913283F0072443A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		596A28502913283F0072443A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -40,6 +43,9 @@
 		599C87132916E690005B5F7B /* PuzzleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleModel.swift; sourceTree = "<group>"; };
 		59E4F5BC2915C2A300C51FD0 /* SudokuGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuGridCell.swift; sourceTree = "<group>"; };
 		59E4F5BE291622C000C51FD0 /* SudokuGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuGrid.swift; sourceTree = "<group>"; };
+		87A7C051ED4E3BA70F8F87CE /* Pods-DailySudokuDash.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DailySudokuDash.debug.xcconfig"; path = "Target Support Files/Pods-DailySudokuDash/Pods-DailySudokuDash.debug.xcconfig"; sourceTree = "<group>"; };
+		B5A163F5F80695FA534DF979 /* Pods_DailySudokuDash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DailySudokuDash.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B90F3DA8BBC0B2F765330A12 /* Pods-DailySudokuDash.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DailySudokuDash.release.xcconfig"; path = "Target Support Files/Pods-DailySudokuDash/Pods-DailySudokuDash.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,17 +53,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3A22D14F37A8A632BD55728 /* Pods_DailySudokuDash.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C825354A29B7F02DD44EDD2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				87A7C051ED4E3BA70F8F87CE /* Pods-DailySudokuDash.debug.xcconfig */,
+				B90F3DA8BBC0B2F765330A12 /* Pods-DailySudokuDash.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		596A28422913283F0072443A = {
 			isa = PBXGroup;
 			children = (
 				596A284D2913283F0072443A /* DailySudokuDash */,
 				596A284C2913283F0072443A /* Products */,
+				4C825354A29B7F02DD44EDD2 /* Pods */,
+				6D6C7CF2958EAE5C5C4097C4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -86,9 +104,18 @@
 				599C87132916E690005B5F7B /* PuzzleModel.swift */,
 				596A2857291328400072443A /* Assets.xcassets */,
 				596A2859291328400072443A /* LaunchScreen.storyboard */,
+				2D4EA4D5292559ED00660FBC /* GoogleService-Info.plist */,
 				596A285C291328400072443A /* Info.plist */,
 			);
 			path = DailySudokuDash;
+			sourceTree = "<group>";
+		};
+		6D6C7CF2958EAE5C5C4097C4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B5A163F5F80695FA534DF979 /* Pods_DailySudokuDash.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -98,9 +125,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 596A285F291328400072443A /* Build configuration list for PBXNativeTarget "DailySudokuDash" */;
 			buildPhases = (
+				4ECBA870EF3DEF8D370139EE /* [CP] Check Pods Manifest.lock */,
 				596A28472913283F0072443A /* Sources */,
 				596A28482913283F0072443A /* Frameworks */,
 				596A28492913283F0072443A /* Resources */,
+				D60665B5C9973097CB11899F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -150,12 +179,55 @@
 			buildActionMask = 2147483647;
 			files = (
 				596A285B291328400072443A /* LaunchScreen.storyboard in Resources */,
+				2D4EA4D6292559ED00660FBC /* GoogleService-Info.plist in Resources */,
 				596A2858291328400072443A /* Assets.xcassets in Resources */,
 				596A28562913283F0072443A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4ECBA870EF3DEF8D370139EE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DailySudokuDash-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D60665B5C9973097CB11899F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DailySudokuDash/Pods-DailySudokuDash-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DailySudokuDash/Pods-DailySudokuDash-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DailySudokuDash/Pods-DailySudokuDash-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		596A28472913283F0072443A /* Sources */ = {
@@ -314,6 +386,7 @@
 		};
 		596A2860291328400072443A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 87A7C051ED4E3BA70F8F87CE /* Pods-DailySudokuDash.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -342,6 +415,7 @@
 		};
 		596A2861291328400072443A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B90F3DA8BBC0B2F765330A12 /* Pods-DailySudokuDash.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
