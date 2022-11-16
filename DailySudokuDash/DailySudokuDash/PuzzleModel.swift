@@ -12,5 +12,6 @@ struct GridSquare {
     var solvedValue: Int
     let canEdit: Bool
     var isSelected: Bool = false
+    var isHighlighted: Bool = false
     var noteField: [String] = ["", "", "", "", "", "", "", "", ""]
 }

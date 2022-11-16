@@ -20,6 +20,7 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     var puzzleData: [GridSquare] = []
     var selectedCellPath: IndexPath?
+    var highlightedCells: [Int] = []
     
     var fromHome = true
     
@@ -36,6 +37,7 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
         fetchPuzzleData()
         drawGrid()
         createTimer()
+        highlightNearbyCells()
     }
     // ***********************
     // *** TIMER ***
@@ -179,6 +181,9 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
         else {cell.numberLabel.textColor = UIColor.blue}
         
         if (cellData.isSelected) {cell.backgroundColor = UIColor(red: 0.4902, green: 0.7451, blue: 0.9294, alpha: 1.0) /* light blue */}
+        else if (cellData.isHighlighted) {
+            cell.backgroundColor = UIColor.lightGray
+        }
         else {cell.backgroundColor = UIColor.clear}
         
         // note labels
@@ -216,9 +221,56 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
             collectionView.reloadItems(at: [pastSelectedPath])
             collectionView.reloadItems(at: [indexPath])
         }
-
+        
         // update cells
         selectedCellPath = indexPath
+        
+        highlightNearbyCells()
+        // TODO: highlight numbers
+            // also do this when changing number
+    }
+    
+    // Highlight the cells in the selected row, column, and square
+    func highlightNearbyCells() {
+        // unhighlight any currently highlighted cells
+        for i in highlightedCells {
+            puzzleData[i].isHighlighted = false
+        }
+        highlightedCells.removeAll()
+        // remove from puzzle data first
+        
+        guard let selectedCellPath = selectedCellPath else {
+            return
+        }
+        let selectedIndex = selectedCellPath.row
+        let row = (selectedIndex / 9)
+        let col = selectedIndex % 9
+        
+        // append highlighted indices to array
+        for i in 0...8 {
+            highlightedCells.append(row*9 + i) // row
+            highlightedCells.append(9*i + col) // col
+        }
+        // squares
+        let squareRow = (row/3)*3
+        let squareCol = (col/3)*3
+        for i in 0...2 {
+            for j in 0...2 {
+                highlightedCells.append(9*(squareRow+i) + squareCol + j)
+            }
+        }
+        
+        // TODO: remove duplicates and currently selected from array
+        // modify puzzle data
+        for i in highlightedCells {
+            puzzleData[i].isHighlighted = true
+        }
+        
+        // TODO: add highlight info to load
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+        
     }
     
     // https://www.kodeco.com/18895088-uicollectionview-tutorial-getting-started#toc-anchor-013
