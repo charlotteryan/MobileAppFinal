@@ -8,14 +8,61 @@
 import UIKit
 
 class MyInfoViewController: UIViewController {
-
+    //All the various lables for user statistics
+    @IBOutlet weak var averageTimeText: UILabel!
+    @IBOutlet weak var mistakesMadeText: UILabel!
+    @IBOutlet weak var puzzleStreakText: UILabel!
+    @IBOutlet weak var totalSolvedPuzzlesText: UILabel!
+    
+    @IBOutlet weak var usernameText: UITextField!
+    
+    
+    //TODO: make the username display in the other view controllers wherever needed
+    //TODO: fetch data from database to update stats
+    
+    
+    
+    
+    //Change username button and alert popup
+    @IBAction func changeUsernameButton(_ sender: Any) {
+        if usernameText.text != nil{
+            UserDefaults.standard.set(usernameText.text, forKey: "Username")
+            usernameText.text = UserDefaults.standard.string(forKey: "Username")
+            usernameChangeAlert()
+        }
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        usernameSetup()
 
         // Do any additional setup after loading the view.
     }
-    
+    //displays an alert for when the user presses the change name button
+    func usernameChangeAlert(){
+        let alertController = UIAlertController(title: "", message:
+                "Username Changed Successfully!", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: .default))
 
+            self.present(alertController, animated: true, completion: nil)
+    }
+    //setting up username, checks if there is already a username saved first. If not, it auto generates one and saves that. If there is one saved then it just loads that
+    func usernameSetup(){
+        //checking if there is already a username saved, if not, auto-generating random
+        if UserDefaults.standard.string(forKey: "Username") == nil{
+            let usernameInt = Int.random(in: 1..<999999)
+            var username = "SudokuLover"
+            username = username+"\(usernameInt)"
+            usernameText.text = username
+            UserDefaults.standard.set(username, forKey: "Username")
+        }else{
+            //displaying saved username
+            usernameText.text = UserDefaults.standard.string(forKey: "Username")
+        }
+        
+        
+    }
     /*
     // MARK: - Navigation
 
