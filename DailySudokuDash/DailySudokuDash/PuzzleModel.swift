@@ -9,6 +9,7 @@ import Foundation
 
 struct GridSquare {
     var value: Int?
+    var solvedValue: Int
     let canEdit: Bool
     var isSelected: Bool = false
     var noteField: [String] = ["", "", "", "", "", "", "", "", ""]

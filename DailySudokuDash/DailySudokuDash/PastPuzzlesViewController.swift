@@ -15,6 +15,10 @@ class PastPuzzlesViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    // Used to return directly from Win to PastPuzzles
+    @IBAction func unwindToPastPuzzles(_ segue: UIStoryboardSegue) {
+    }
+    
 
     /*
     // MARK: - Navigation

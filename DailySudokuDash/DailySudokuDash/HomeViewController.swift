@@ -26,11 +26,26 @@ class HomeViewController: UIViewController {
         self.performSegue(withIdentifier: "homeToPastPuzzles", sender: sender)
     }
     
+    // Hide navigation bar -- don't need nav bar on home screen
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    // Show navigation bar again once we leave
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    // Used to return directly from Win to Home
+    @IBAction func unwindToHome(_ segue: UIStoryboardSegue) {
+    }
     
     // Prepare for segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "homeToDailyPuzzle") {
             // TODO: probably fetch puzzle info
+            guard let puzzleVC = segue.destination as? PuzzleViewController else {return}
+            puzzleVC.fromHome = true
         }
     }
 }

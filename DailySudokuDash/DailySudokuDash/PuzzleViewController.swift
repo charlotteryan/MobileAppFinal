@@ -21,6 +21,11 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
     var puzzleData: [GridSquare] = []
     var selectedCellPath: IndexPath?
     
+    var fromHome = true
+    
+    var unsolvedBoard = ".23458679456179238789236145241365897367892451895714362632987514578641923914523786" // default board -- replace in fetch data
+    var solvedBoard = "123458679456179238789236145241365897367892451895714362632987514578641923914523786"
+    
     var notesMode = false
     
     override func viewDidLoad() {
@@ -170,8 +175,8 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
         if let val = cellData.value {cell.numberLabel.text = String(val)}
         else {cell.numberLabel.text = ""}
         
-        if (!cellData.canEdit) {cell.numberLabel.textColor = UIColor.blue}
-        else {cell.numberLabel.textColor = UIColor.black}
+        if (!cellData.canEdit) {cell.numberLabel.textColor = UIColor.black}
+        else {cell.numberLabel.textColor = UIColor.blue}
         
         if (cellData.isSelected) {cell.backgroundColor = UIColor(red: 0.4902, green: 0.7451, blue: 0.9294, alpha: 1.0) /* light blue */}
         else {cell.backgroundColor = UIColor.clear}
@@ -239,16 +244,57 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func fetchPuzzleData() {
-        let unsolvedBoard = ".23.5...94.6.7..38...23.145241.6..9..67....51.9.7.436.632.87.1...8.41.2.914......"
         // TODO: get board string from firebase instead
         
-        for char in unsolvedBoard {
-            if (char == ".") {
-                puzzleData.append(GridSquare(value: nil, canEdit: true))
+        let boardData = zip(unsolvedBoard, solvedBoard)
+        for (unsolved, solved) in boardData {
+            if let solvedVal = solved.wholeNumberValue {
+                if (unsolved == ".") {
+                    puzzleData.append(GridSquare(value: nil, solvedValue: solvedVal, canEdit: true))
+                }
+                else {
+                    puzzleData.append(GridSquare(value: solvedVal, solvedValue: solvedVal, canEdit: false))
+                }
             }
-            else if let intVal = char.wholeNumberValue {
-                puzzleData.append(GridSquare(value: intVal, canEdit: false))
+        }
+    }
+    
+    // Check if puzzle solution is correct
+    @IBAction func checkBoard(_ sender: Any) {
+        for i in 0...puzzleData.count-1 {
+            if (puzzleData[i].value != puzzleData[i].solvedValue) {
+                // TODO: incorrect board
+                print("incorrect board")
+                return
             }
+        
+        }
+        
+        // TODO: correct board
+        self.performSegue(withIdentifier: "puzzleToWin", sender: sender)
+    }
+    
+    // Prepare for segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "puzzleToWin") {
+            guard let winVC = segue.destination as? WinViewController else {return}
+            
+            // Convert seconds and minutes into strings
+            var stringSec = String(describing: seconds)
+            var stringMin = String(describing: minutes)
+            if seconds == 60 {
+                stringSec = "00"
+            }
+            if seconds < 10{
+                stringSec = "0" + String(describing: seconds)
+            }
+            if minutes < 10{
+                stringMin = "0" + stringMin
+            }
+            winVC.time = "\(stringMin):\(stringSec)"
+            
+            // Tell win screen if from homepage or past puzzles
+            winVC.fromHome = self.fromHome
         }
     }
     
