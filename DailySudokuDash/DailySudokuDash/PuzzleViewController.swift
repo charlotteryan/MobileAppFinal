@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import Firebase
 
 class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    let ref = Database.database().reference()
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var sudokuGrid: SudokuGrid!
@@ -24,11 +26,11 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     var fromHome = true
     
-    var unsolvedBoard = ".23458679456179238789236145241365897367892451895714362632987514578641923914523786" // default board -- replace in fetch data
-    var solvedBoard = "123458679456179238789236145241365897367892451895714362632987514578641923914523786"
+    var solvedBoard = UserDefaults.standard.string(forKey: "solvedBoard") ?? ""
+    var unsolvedBoard = UserDefaults.standard.string(forKey: "unsolvedBoard") ?? ""
     
     var notesMode = false
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.

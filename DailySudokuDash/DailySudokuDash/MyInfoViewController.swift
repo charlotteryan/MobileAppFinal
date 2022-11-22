@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import Firebase
 
 class MyInfoViewController: UIViewController {
+    
+    let ref = Database.database().reference()
     //All the various lables for user statistics
     @IBOutlet weak var averageTimeText: UILabel!
     @IBOutlet weak var mistakesMadeText: UILabel!
@@ -16,16 +19,21 @@ class MyInfoViewController: UIViewController {
     
     @IBOutlet weak var usernameText: UITextField!
     
+    var currentUsername = UserDefaults.standard.string(forKey: "Username")
+    
     
     //TODO: make the username display in the other view controllers wherever needed
     //TODO: fetch data from database to update stats
     
-    
-    
-    
     //Change username button and alert popup
     @IBAction func changeUsernameButton(_ sender: Any) {
         if usernameText.text != nil{
+//            print(currentUsername)
+//            print(usernameText.text)
+//            print(ref.child("Users/\(currentUsername!)"))
+//            ref.child("Users/\(currentUsername!)").setValue(usernameText.text)
+//            ref.child("Users/SudokuLover373/mistakesMade").setValue(109)
+            currentUsername = usernameText.text
             UserDefaults.standard.set(usernameText.text, forKey: "Username")
             usernameText.text = UserDefaults.standard.string(forKey: "Username")
             usernameChangeAlert()
@@ -36,7 +44,6 @@ class MyInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         usernameSetup()
-
         // Do any additional setup after loading the view.
     }
     //displays an alert for when the user presses the change name button
@@ -49,19 +56,8 @@ class MyInfoViewController: UIViewController {
     }
     //setting up username, checks if there is already a username saved first. If not, it auto generates one and saves that. If there is one saved then it just loads that
     func usernameSetup(){
-        //checking if there is already a username saved, if not, auto-generating random
-        if UserDefaults.standard.string(forKey: "Username") == nil{
-            let usernameInt = Int.random(in: 1..<999999)
-            var username = "SudokuLover"
-            username = username+"\(usernameInt)"
-            usernameText.text = username
-            UserDefaults.standard.set(username, forKey: "Username")
-        }else{
-            //displaying saved username
-            usernameText.text = UserDefaults.standard.string(forKey: "Username")
-        }
-        
-        
+        currentUsername = UserDefaults.standard.string(forKey: "Username")
+        usernameText.text = UserDefaults.standard.string(forKey: "Username")
     }
     /*
     // MARK: - Navigation
