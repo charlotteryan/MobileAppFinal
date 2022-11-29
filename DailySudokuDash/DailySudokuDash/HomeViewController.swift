@@ -11,21 +11,55 @@ import Firebase
 class HomeViewController: UIViewController {
     
     let ref = Database.database().reference()
+    var solvedBoard = ""
+    var unsolvedBoard = ""
+    var longDate = ""
     
-
+    @IBOutlet weak var fetchErrorMessage: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 //        UserDefaults.standard.set(nil, forKey: "Username")
-        getBoards()
         usernameSetup()
+        fetchErrorMessage.isHidden = true
     }
     
+    
     @IBAction func clickPlayToday(_ sender: Any) {
-        self.performSegue(withIdentifier: "homeToDailyPuzzle", sender: sender)
+        let group = DispatchGroup()
+        group.enter()
+        var fetchSuccess = true
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            DispatchQueue.main.async {
+                self.activityIndicator.startAnimating()
+            }
+            self.getBoards(date: Date.now, completionHandler: { (success: Bool) in
+                fetchSuccess = success
+                group.leave()
+            })
+        }
+        
+        group.notify(queue: .global(qos: .userInitiated)) {
+            DispatchQueue.main.async {
+                self.activityIndicator.stopAnimating()
+                if (fetchSuccess) {
+                    self.performSegue(withIdentifier: "homeToDailyPuzzle", sender: sender)
+                }
+                else {
+                    self.fetchErrorMessage.isHidden = false
+                }
+            }
+        }
     }
     
     @IBAction func clickPlayPast(_ sender: Any) {
         self.performSegue(withIdentifier: "homeToPastPuzzles", sender: sender)
+    }
+    
+    @IBAction func clickTestPuzzle(_ sender: Any) {
+        self.performSegue(withIdentifier: "homeToEasyPuzzle", sender: sender)
     }
     
     // Hide navigation bar -- don't need nav bar on home screen
@@ -45,23 +79,44 @@ class HomeViewController: UIViewController {
     // Prepare for segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "homeToDailyPuzzle") {
-            // TODO: probably fetch puzzle info
             guard let puzzleVC = segue.destination as? PuzzleViewController else {return}
+            
+            // Set the board's puzzles to the fetched puzzles
+            puzzleVC.solvedBoard = solvedBoard
+            puzzleVC.unsolvedBoard = unsolvedBoard
+            
+            puzzleVC.viewTitle = longDate
+            puzzleVC.fromHome = true 
+        }
+        else if (segue.identifier == "homeToEasyPuzzle") {
+            guard let puzzleVC = segue.destination as? PuzzleViewController else {return}
+            
+            // Use default board -- only 1 square missing
             puzzleVC.fromHome = true
+            puzzleVC.viewTitle = "Easy Puzzle for Testing"
         }
     }
     
-    func getBoards(){
-        ref.child("Boards/11_21_2022").observeSingleEvent(of: .value, with: { snapshot in
-        let value = snapshot.value as? NSDictionary
-        let solvedBoard = value?["solvedBoard"] as? String ?? ""
-        let unsolvedBoard = value?["unsolvedBoard"] as? String ?? ""
-        UserDefaults.standard.set(solvedBoard, forKey: "solvedBoard")
-        UserDefaults.standard.set(unsolvedBoard, forKey: "unsolvedBoard")
-        }) { error in
-          print(error.localizedDescription)
+        // Fetch the boards from Firebase
+        func getBoards(date: Date, completionHandler: @escaping(Bool) -> Void) {
+            // Get today's date as a string
+            let format = DateFormatter()
+            format.dateFormat = "MM_dd_yyyy"
+            let dateString = format.string(from: Date.now) // used to fetch data from Firebase
+            format.dateFormat = "MMMM d, yyyy"
+            self.longDate = format.string(from: Date.now) // used for title of puzzle page
+    
+            ref.child("Boards/" + dateString).observeSingleEvent(of: .value, with: { snapshot in
+                let value = snapshot.value as? NSDictionary
+                self.solvedBoard = value?["solvedBoard"] as? String ?? "................................................................................."
+                self.unsolvedBoard = value?["unsolvedBoard"] as? String ?? "................................................................................."
+                completionHandler(true)
+            })
+            { error in
+                print(error.localizedDescription)
+                completionHandler(false)
+            }
         }
-    }
     
     func usernameSetup(){
         //checking if there is already a username saved, if not, auto-generating random

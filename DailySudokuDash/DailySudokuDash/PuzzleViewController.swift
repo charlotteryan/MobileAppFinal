@@ -24,23 +24,25 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
     var selectedCellPath: IndexPath?
     var highlightedCells: [Int] = []
     
-    var fromHome = true
+    var fromHome = true // Tells us where to return after we win
+    var viewTitle = "Puzzle"
     
-    var solvedBoard = UserDefaults.standard.string(forKey: "solvedBoard") ?? ""
-    var unsolvedBoard = UserDefaults.standard.string(forKey: "unsolvedBoard") ?? ""
+    var unsolvedBoard = ".23458679456179238789236145241365897367892451895714362632987514578641923914523786" // default board -- replace in fetch data
+    var solvedBoard = "123458679456179238789236145241365897367892451895714362632987514578641923914523786"
     
     var notesMode = false
         
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        self.title = "Today's Game"
+        self.title = viewTitle
         setUpCollectionView()
-        fetchPuzzleData()
+        readPuzzleData()
         drawGrid()
         createTimer()
         highlightNearbyCells()
     }
+    
     // ***********************
     // *** TIMER ***
     // ***********************
@@ -116,8 +118,8 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
             }
         }
     
-        UIView.performWithoutAnimation {
-            collectionView.reloadItems(at: [selectedCellPath])
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
         }
     }
     
@@ -129,8 +131,8 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
         if (puzzleData[selectedCellPath.row].canEdit) {
             puzzleData[selectedCellPath.row].value = nil
             puzzleData[selectedCellPath.row].noteField = ["", "", "", "", "", "", "", "", ""]
-            UIView.performWithoutAnimation {
-                collectionView.reloadItems(at: [selectedCellPath])
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
             }
         }
     }
@@ -151,7 +153,9 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
                 puzzleData[i].noteField = ["", "", "", "", "", "", "", "", ""]
             }
         }
-        collectionView.reloadData()
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
     }
     
     
@@ -172,6 +176,16 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
         if (selectedCellPath == nil) {
             selectedCellPath = indexPath
             puzzleData[indexPath.row].isSelected = true
+            highlightNearbyCells()
+        }
+        
+        // Find the value of the currently selected cell for highlighting
+        var currentSelectedValue = 0
+        if let selectedCellPath = selectedCellPath {
+            let actualVal = puzzleData[selectedCellPath.row].value
+            if (actualVal != nil) {
+                currentSelectedValue = actualVal ?? 0 // don't care if null value
+            }
         }
         
         let cellData = puzzleData[indexPath.row]
@@ -182,9 +196,14 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
         if (!cellData.canEdit) {cell.numberLabel.textColor = UIColor.black}
         else {cell.numberLabel.textColor = UIColor.blue}
         
-        if (cellData.isSelected) {cell.backgroundColor = UIColor(red: 0.4902, green: 0.7451, blue: 0.9294, alpha: 1.0) /* light blue */}
+        if (cellData.isSelected) {
+            cell.backgroundColor = UIColor(red: 0.4902, green: 0.7451, blue: 0.9294, alpha: 1.0) /* light blue */
+        }
+        else if (cellData.value == currentSelectedValue) {
+            cell.backgroundColor = UIColor(red: 0.5686, green: 0.5686, blue: 0.5686, alpha: 1.0) /* darker grey */
+        }
         else if (cellData.isHighlighted) {
-            cell.backgroundColor = UIColor.lightGray
+            cell.backgroundColor = UIColor(red: 0.7569, green: 0.7569, blue: 0.7569, alpha: 1.0) /* light grey */
         }
         else {cell.backgroundColor = UIColor.clear}
         
@@ -228,12 +247,11 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
         selectedCellPath = indexPath
         
         highlightNearbyCells()
-        // TODO: highlight numbers
-            // also do this when changing number
     }
     
     // Highlight the cells in the selected row, column, and square
     func highlightNearbyCells() {
+        print("highlighting")
         // unhighlight any currently highlighted cells
         for i in highlightedCells {
             puzzleData[i].isHighlighted = false
@@ -242,8 +260,10 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
         // remove from puzzle data first
         
         guard let selectedCellPath = selectedCellPath else {
+            print("no selected cell")
             return
         }
+        print("start finding cells to highlight")
         let selectedIndex = selectedCellPath.row
         let row = (selectedIndex / 9)
         let col = selectedIndex % 9
@@ -262,13 +282,11 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
             }
         }
         
-        // TODO: remove duplicates and currently selected from array
         // modify puzzle data
         for i in highlightedCells {
             puzzleData[i].isHighlighted = true
         }
         
-        // TODO: add highlight info to load
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
@@ -297,9 +315,8 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
         sudokuGrid.gridSize = collectionView.frame.width
     }
     
-    func fetchPuzzleData() {
-        // TODO: get board string from firebase instead
-        
+    func readPuzzleData() {
+        print("In puzzle is \(unsolvedBoard)")
         let boardData = zip(unsolvedBoard, solvedBoard)
         for (unsolved, solved) in boardData {
             if let solvedVal = solved.wholeNumberValue {
@@ -317,14 +334,13 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBAction func checkBoard(_ sender: Any) {
         for i in 0...puzzleData.count-1 {
             if (puzzleData[i].value != puzzleData[i].solvedValue) {
-                // TODO: incorrect board
+                // TODO: add penalty + message on screen
                 print("incorrect board")
                 return
             }
         
         }
         
-        // TODO: correct board
         self.performSegue(withIdentifier: "puzzleToWin", sender: sender)
     }
     
