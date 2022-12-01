@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C249E0129395676003926DE /* MyCellClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C249E0029395676003926DE /* MyCellClass.swift */; };
 		2D4EA4D6292559ED00660FBC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2D4EA4D5292559ED00660FBC /* GoogleService-Info.plist */; };
 		596A284F2913283F0072443A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596A284E2913283F0072443A /* AppDelegate.swift */; };
 		596A28512913283F0072443A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596A28502913283F0072443A /* SceneDelegate.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0C249E0029395676003926DE /* MyCellClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCellClass.swift; sourceTree = "<group>"; };
 		2D4EA4D5292559ED00660FBC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		596A284B2913283F0072443A /* DailySudokuDash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DailySudokuDash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		596A284E2913283F0072443A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 				596A28502913283F0072443A /* SceneDelegate.swift */,
 				596A28542913283F0072443A /* Main.storyboard */,
 				596A286E291332CA0072443A /* WinViewController.swift */,
+				0C249E0029395676003926DE /* MyCellClass.swift */,
 				596A286C291332880072443A /* MyInfoViewController.swift */,
 				596A286A2913325B0072443A /* LeaderboardViewController.swift */,
 				596A2868291332280072443A /* PastPuzzlesViewController.swift */,
@@ -238,6 +241,7 @@
 				599C87142916E690005B5F7B /* PuzzleModel.swift in Sources */,
 				596A2869291332280072443A /* PastPuzzlesViewController.swift in Sources */,
 				59E4F5BF291622C000C51FD0 /* SudokuGrid.swift in Sources */,
+				0C249E0129395676003926DE /* MyCellClass.swift in Sources */,
 				596A2867291331FB0072443A /* PuzzleViewController.swift in Sources */,
 				596A284F2913283F0072443A /* AppDelegate.swift in Sources */,
 				596A28512913283F0072443A /* SceneDelegate.swift in Sources */,

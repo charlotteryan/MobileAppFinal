@@ -78,6 +78,17 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
         timerLabel.text = stringMin + " : " + stringSec
     }
     
+    // ADD TIME + FLASHES RED
+    func addTime() {
+        minutes += 1
+        self.timerLabel.textColor = .red
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+            // perform your task here...
+            print("Async after 3 seconds")
+            self.timerLabel.textColor = .black
+        })
+    }
+    
     // *********************
     // *** MODIFY PUZZLE ***
     // *********************
@@ -122,6 +133,7 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
             self.collectionView.reloadData()
         }
     }
+
     
     // Erase any value or notes inside the selected cell
     @IBAction func eraseCell() {

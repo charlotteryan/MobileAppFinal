@@ -20,18 +20,18 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
     func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "theCell")
+        //tableView.register(UITableViewCell.self, forCellReuseIdentifier: "theCell")
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return myArray.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let myCell = tableView.dequeueReusableCell(withIdentifier: "theCell", for: indexPath)
-        let num = indexPath.row+1
-        myCell.textLabel!.text = String(describing: num) + ". " + myArray[indexPath.row] + "   " + myTimes[indexPath.row]
-        
-        return myCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MyCellClass
+        cell.num.text = String(describing: indexPath.row+1) + ". "
+        cell.name.text = myArray[indexPath.row]
+        cell.time.text = myTimes[indexPath.row]
+        return cell
     }
 
     var myArray = ["Charlotte", "Madeline", "Ian", "Daniel", "Jake", "Lindsay", "Abby", "Mike", "James", "Brody", "Lydia"]
