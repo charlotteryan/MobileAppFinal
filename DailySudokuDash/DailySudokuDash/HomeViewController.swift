@@ -24,6 +24,7 @@ class HomeViewController: UIViewController {
 //        UserDefaults.standard.set(nil, forKey: "Username")
 //        print(UIDevice.current.identifierForVendor!.uuidString)
 //        print(UserDefaults.standard.string(forKey: "Username"))
+        
         usernameSetup()
         fetchErrorMessage.isHidden = true
     }

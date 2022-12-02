@@ -6,14 +6,17 @@
 //
 
 import UIKit
+import Firebase
+
 
 class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        
+        fetchLeaderBoard()
         setupTableView()
     }
     
@@ -32,6 +35,25 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
         cell.name.text = myArray[indexPath.row]
         cell.time.text = myTimes[indexPath.row]
         return cell
+    }
+    
+    func fetchLeaderBoard(){
+        print("PRINTING BY SCORE")
+        let ref = Database.database().reference()
+        let usersinorder = ref.child("LeaderBoard").queryOrdered(byChild: "Score").queryLimited(toFirst: 20)
+        
+        usersinorder.observe(.value, with:{ (snapshot: DataSnapshot) in
+    
+            for snap in snapshot.children {
+
+                print((snap as! DataSnapshot).key)
+                self.myArray.append((snap as! DataSnapshot).key)
+                let scoreDict = (snap as! DataSnapshot).value as! NSDictionary
+                let score = scoreDict["Score"] as? Int ?? 0
+                print(score)
+                self.myTimes.append(String(score))
+            }
+        })
     }
 
     var myArray = ["Charlotte", "Madeline", "Ian", "Daniel", "Jake", "Lindsay", "Abby", "Mike", "James", "Brody", "Lydia"]
