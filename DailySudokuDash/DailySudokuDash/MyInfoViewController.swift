@@ -28,11 +28,10 @@ class MyInfoViewController: UIViewController {
     //Change username button and alert popup
     @IBAction func changeUsernameButton(_ sender: Any) {
         if usernameText.text != nil{
-//            print(currentUsername)
-//            print(usernameText.text)
-//            print(ref.child("Users/\(currentUsername!)"))
-//            ref.child("Users/\(currentUsername!)").setValue(usernameText.text)
-//            ref.child("Users/SudokuLover373/mistakesMade").setValue(109)
+            print(currentUsername)
+            print(usernameText.text)
+            print(ref.child("Users/\(UIDevice.current.identifierForVendor!.uuidString)/username"))
+            ref.child("Users/\(UIDevice.current.identifierForVendor!.uuidString)/username").setValue(usernameText.text)
             currentUsername = usernameText.text
             UserDefaults.standard.set(usernameText.text, forKey: "Username")
             usernameText.text = UserDefaults.standard.string(forKey: "Username")

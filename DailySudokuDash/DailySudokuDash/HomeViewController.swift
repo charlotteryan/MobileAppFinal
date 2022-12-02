@@ -20,7 +20,10 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //FIREBASE TESTING LINES
 //        UserDefaults.standard.set(nil, forKey: "Username")
+//        print(UIDevice.current.identifierForVendor!.uuidString)
+//        print(UserDefaults.standard.string(forKey: "Username"))
         usernameSetup()
         fetchErrorMessage.isHidden = true
     }
@@ -125,7 +128,7 @@ class HomeViewController: UIViewController {
             var username = "SudokuLover"
             username = username+"\(usernameInt)"
             UserDefaults.standard.set(username, forKey: "Username")
-//            ref.child("Users").child(username).setValue(["averageTime": 0, "mistakesMade": 0, "puzzleStreak": 0, "puzzlesSolved": 0])
+            ref.child("Users").child(UIDevice.current.identifierForVendor!.uuidString).setValue(["username": username, "averageTime": 0, "mistakesMade": 0, "puzzleStreak": 0, "puzzlesSolved": 0])
         }
     }
 }
