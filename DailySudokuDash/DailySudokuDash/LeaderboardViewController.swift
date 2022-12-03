@@ -77,7 +77,7 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
     func fetchLeaderBoard(completionHandler: @escaping(Bool) -> Void){
         print("PRINTING BY SCORE")
         let ref = Database.database().reference()
-        let usersinorder = ref.child("LeaderBoard").queryOrdered(byChild: "Score").queryLimited(toFirst: 20)
+        let usersinorder = ref.child("LeaderBoard").queryOrdered(byChild: "Score").queryLimited(toFirst: 99)
         
         usersinorder.observeSingleEvent(of: .value, with:{ (snapshot: DataSnapshot) in
             

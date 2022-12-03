@@ -21,12 +21,16 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //FIREBASE TESTING LINES
-//        UserDefaults.standard.set(nil, forKey: "Username")
+        UserDefaults.standard.set(nil, forKey: "Username")
 //        print(UIDevice.current.identifierForVendor!.uuidString)
 //        print(UserDefaults.standard.string(forKey: "Username"))
         
         usernameSetup()
         fetchErrorMessage.isHidden = true
+        
+//        for i in 6...100{
+//            ref.child("LeaderBoard").child("Panda" + String(i)).setValue(["Score": Int.random(in: 1..<5000)])
+//        }
     }
     
     
