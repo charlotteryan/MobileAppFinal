@@ -94,6 +94,20 @@
                                 <color key="textColor" systemColor="systemRedColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Time Until Next Puzzle:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KZf-8q-m4w">
+                                <rect key="frame" x="107" y="304" width="177" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ovk-cu-kYS">
+                                <rect key="frame" x="107" y="333" width="177" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -102,6 +116,9 @@
                     <connections>
                         <outlet property="activityIndicator" destination="TT4-I7-eqb" id="JVT-Fa-LHs"/>
                         <outlet property="fetchErrorMessage" destination="L2D-Cs-f3h" id="Olz-pc-mqX"/>
+                        <outlet property="playTodayButton" destination="Cfd-Hw-HZD" id="E3f-M3-fxr"/>
+                        <outlet property="timeUntilNextPuzzle" destination="KZf-8q-m4w" id="wMM-iO-P2b"/>
+                        <outlet property="timerUntilNextPuzzle" destination="Ovk-cu-kYS" id="aM7-sv-96j"/>
                         <segue destination="4XI-1d-tND" kind="show" identifier="homeToDailyPuzzle" id="NTX-nL-Pqv"/>
                         <segue destination="Ecs-hN-9uy" kind="show" identifier="homeToPastPuzzles" id="5U8-6l-naO"/>
                         <segue destination="4XI-1d-tND" kind="show" identifier="homeToEasyPuzzle" id="iyU-g5-908"/>

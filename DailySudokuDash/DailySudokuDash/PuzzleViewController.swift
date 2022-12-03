@@ -386,6 +386,8 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
         if(dailyPuzzleVC){
             let username = UserDefaults.standard.string(forKey: "Username") ?? "sudokDEFAULT"
             ref.child("LeaderBoard").child(username).setValue(["Score": winTime])
+            
+            UserDefaults.standard.set(true, forKey: "completedDaily")
         }
     }
     

@@ -15,22 +15,25 @@ class HomeViewController: UIViewController {
     var unsolvedBoard = ""
     var longDate = ""
     
+    var timer:Timer = Timer()
+    var hours:Int = 0
+    var minutes:Int = 0
+    var seconds:Int = 0
+    
     @IBOutlet weak var fetchErrorMessage: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var playTodayButton: UIButton!
+    @IBOutlet weak var timeUntilNextPuzzle: UILabel!
+    @IBOutlet weak var timerUntilNextPuzzle: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //FIREBASE TESTING LINES
         UserDefaults.standard.set(nil, forKey: "Username")
-//        print(UIDevice.current.identifierForVendor!.uuidString)
-//        print(UserDefaults.standard.string(forKey: "Username"))
-        
+
+
         usernameSetup()
         fetchErrorMessage.isHidden = true
-        
-//        for i in 6...100{
-//            ref.child("LeaderBoard").child("Panda" + String(i)).setValue(["Score": Int.random(in: 1..<5000)])
-//        }
     }
     
     
@@ -73,6 +76,18 @@ class HomeViewController: UIViewController {
     // Hide navigation bar -- don't need nav bar on home screen
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+        
+        if(!UserDefaults.standard.bool(forKey: "completedDaily")){
+            playTodayButton.isHidden = false
+            timeUntilNextPuzzle.isHidden = true
+            timerUntilNextPuzzle.isHidden = true
+            createTimer()
+        }
+        else{
+            playTodayButton.isHidden = true
+            timeUntilNextPuzzle.isHidden = false
+            timerUntilNextPuzzle.isHidden = false
+        }
     }
     
     // Show navigation bar again once we leave
@@ -129,13 +144,65 @@ class HomeViewController: UIViewController {
         }
     
     func usernameSetup(){
-        //checking if there is already a username saved, if not, auto-generating random
+        //checking if there is already a username saved, if not, auto-generating random username
         if UserDefaults.standard.string(forKey: "Username") == nil{
             let usernameInt = Int.random(in: 1..<999999)
             var username = "SudokuLover"
             username = username+"\(usernameInt)"
             UserDefaults.standard.set(username, forKey: "Username")
             ref.child("Users").child(UIDevice.current.identifierForVendor!.uuidString).setValue(["username": username, "averageTime": 0, "mistakesMade": 0, "puzzleStreak": 0, "puzzlesSolved": 0])
+            
+            UserDefaults.standard.set(false, forKey: "completedDaily")
         }
+    }
+    
+    func createTimer() {
+        let currentDate = Date()
+        var nextDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate)!
+        nextDate = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: nextDate)!
+
+        let diffComponents = Calendar.current.dateComponents([.hour, .minute, .second], from: currentDate, to: nextDate)
+        hours = diffComponents.hour!
+        minutes = diffComponents.minute!
+        seconds = diffComponents.second!
+    
+        timer = Timer.scheduledTimer(
+            timeInterval: 1,
+            target: self,
+            selector: #selector(fireTimer),
+            userInfo: nil,
+            repeats: true
+        )
+    }
+    
+    @objc func fireTimer() {
+        if seconds-1 == -1 {
+            minutes-=1
+            seconds = 59
+        }
+        else {
+            seconds-=1
+        }
+        if minutes == -1 {
+            minutes=59
+            hours -= 1
+        }
+        
+        var stringSec = String(describing: seconds)
+        var stringMin = String(describing: minutes)
+        var stringHours = String(describing: hours)
+        if seconds == 0 {
+            stringSec = "00"
+        }
+        if seconds < 10{
+            stringSec = "0" + String(describing: seconds)
+        }
+        if minutes < 10{
+            stringMin = "0" + stringMin
+        }
+        if hours < 10{
+            stringHours = "0" + stringHours
+        }
+        timerUntilNextPuzzle.text = stringHours + " : " + stringMin + " : " + stringSec
     }
 }
