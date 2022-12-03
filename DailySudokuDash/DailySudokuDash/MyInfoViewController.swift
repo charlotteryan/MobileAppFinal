@@ -38,22 +38,20 @@ class MyInfoViewController: UIViewController {
                 if snapshot.exists() {
 
                     print("Username already exists")
-
+                    self.noUsernameChangeAlert()
                 } else {
 
                     print("Username doesn't already exist")
+                    self.ref.child("Users/\(UIDevice.current.identifierForVendor!.uuidString)/username").setValue(self.usernameText.text)
+                    self.currentUsername = self.usernameText.text
+                    UserDefaults.standard.set(self.usernameText.text, forKey: "Username")
+                    self.usernameText.text = UserDefaults.standard.string(forKey: "Username")
+                    self.usernameChangeAlert()
 
                 }
 
             }, withCancel: nil)
             
-        
-            print(ref.child("Users/\(UIDevice.current.identifierForVendor!.uuidString)/username"))
-            ref.child("Users/\(UIDevice.current.identifierForVendor!.uuidString)/username").setValue(usernameText.text)
-            currentUsername = usernameText.text
-            UserDefaults.standard.set(usernameText.text, forKey: "Username")
-            usernameText.text = UserDefaults.standard.string(forKey: "Username")
-            usernameChangeAlert()
         }
     }
     
@@ -71,6 +69,16 @@ class MyInfoViewController: UIViewController {
 
             self.present(alertController, animated: true, completion: nil)
     }
+    
+    func noUsernameChangeAlert(){
+        let alertController = UIAlertController(title: "", message:
+                "Username Taken! Please pick another username", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: .default))
+
+            self.present(alertController, animated: true, completion: nil)
+    }
+    
+    
     //setting up username, checks if there is already a username saved first. If not, it auto generates one and saves that. If there is one saved then it just loads that
     func usernameSetup(){
         currentUsername = UserDefaults.standard.string(forKey: "Username")
