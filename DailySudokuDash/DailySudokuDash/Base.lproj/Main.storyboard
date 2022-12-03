@@ -717,12 +717,17 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="i5f-cy-pON">
+                                <rect key="frame" x="185" y="246" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="JRm-XF-Jur"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Leaderboard" image="leaderboard_icon" id="781-Yo-rHY"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="i5f-cy-pON" id="9dN-Va-GPV"/>
                         <outlet property="tableView" destination="LYJ-qy-XvA" id="AE3-vc-Yk3"/>
                     </connections>
                 </viewController>

@@ -12,12 +12,20 @@ import Firebase
 class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
+    
+    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
-        fetchLeaderBoard()
+        self.activityIndicator.isHidden = true
+        self.activityIndicator.hidesWhenStopped = true
         setupTableView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        loadLeaderBoardData()
     }
     
     func setupTableView() {
@@ -37,23 +45,64 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
         return cell
     }
     
-    func fetchLeaderBoard(){
+    func loadLeaderBoardData(){
+        let group = DispatchGroup()
+        group.enter()
+        var fetchSuccess = true
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            DispatchQueue.main.async {
+                self.activityIndicator.isHidden = false
+                self.activityIndicator.startAnimating()
+            }
+            self.fetchLeaderBoard(completionHandler: { (success: Bool) in
+                fetchSuccess = success
+                group.leave()
+            })
+        }
+        
+        group.notify(queue: .global(qos: .userInitiated)) {
+            DispatchQueue.main.async {
+                self.activityIndicator.stopAnimating()
+                if (fetchSuccess) {
+                    self.tableView.reloadData()
+                }
+                else {
+                    print("ERROR FETCHING LEADERBOARD")
+                }
+            }
+        }
+    }
+    
+    func fetchLeaderBoard(completionHandler: @escaping(Bool) -> Void){
         print("PRINTING BY SCORE")
         let ref = Database.database().reference()
         let usersinorder = ref.child("LeaderBoard").queryOrdered(byChild: "Score").queryLimited(toFirst: 20)
         
-        usersinorder.observe(.value, with:{ (snapshot: DataSnapshot) in
+        usersinorder.observeSingleEvent(of: .value, with:{ (snapshot: DataSnapshot) in
+            
+            self.myTimes = []
+            self.myArray = []
     
             for snap in snapshot.children {
 
                 print((snap as! DataSnapshot).key)
                 self.myArray.append((snap as! DataSnapshot).key)
-                let scoreDict = (snap as! DataSnapshot).value as! NSDictionary
-                let score = scoreDict["Score"] as? Int ?? 0
+                let scoreDict = (snap as! DataSnapshot).value as? NSDictionary
+                let score = scoreDict?["Score"] as? Int ?? 0
                 print(score)
                 self.myTimes.append(String(score))
             }
+            
+            
+            
+            
+            completionHandler(true)
         })
+        { error in
+            print(error.localizedDescription)
+            completionHandler(false)
+        }
     }
 
     var myArray = ["Charlotte", "Madeline", "Ian", "Daniel", "Jake", "Lindsay", "Abby", "Mike", "James", "Brody", "Lydia"]
