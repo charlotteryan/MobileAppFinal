@@ -12,7 +12,8 @@ import Firebase
 class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
-    
+    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var positionLabel: UILabel!
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
@@ -26,6 +27,7 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewWillAppear(_ animated: Bool) {
         loadLeaderBoardData()
+        usernameLabel.text = UserDefaults.standard.string(forKey: "Username")
     }
     
     func setupTableView() {
@@ -77,24 +79,31 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
     func fetchLeaderBoard(completionHandler: @escaping(Bool) -> Void){
         print("PRINTING BY SCORE")
         let ref = Database.database().reference()
-        let usersinorder = ref.child("LeaderBoard").queryOrdered(byChild: "Score").queryLimited(toFirst: 99)
+        let usersinorder = ref.child("LeaderBoard").queryOrdered(byChild: "Score")
         
         usersinorder.observeSingleEvent(of: .value, with:{ (snapshot: DataSnapshot) in
             
             self.myTimes = []
             self.myArray = []
     
+            var i = 1
             for snap in snapshot.children {
 
                 self.myArray.append((snap as! DataSnapshot).key)
+                print((snap as! DataSnapshot).key)
+                print(UserDefaults.standard.string(forKey: "Username"))
+                if((snap as! DataSnapshot).key == UserDefaults.standard.string(forKey: "Username")){
+                    print("FOUND USER")
+                    self.positionLabel.text = String(i)
+                }
+                else{
+                    print("DID NOT FIND USER")
+                }
                 let scoreDict = (snap as! DataSnapshot).value as? NSDictionary
                 let score = scoreDict?["Score"] as? String ?? "NA"
                 self.myTimes.append(String(score))
+                i += 1
             }
-            
-            
-            
-            
             completionHandler(true)
         })
         { error in
@@ -102,7 +111,8 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
             completionHandler(false)
         }
     }
-
+    
+  
     var myArray = ["Charlotte", "Madeline", "Ian", "Daniel", "Jake", "Lindsay", "Abby", "Mike", "James", "Brody", "Lydia"]
     var myTimes = ["0.57", "0.99", "1.31", "1.56", "2.13", "2.59", "3.10", "3.59", "12.50", "12.59", "15.10"]
     

@@ -390,6 +390,9 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
             ref.child("LeaderBoard").child(username).setValue(["Score": winTime])
             
             UserDefaults.standard.set(true, forKey: "completedDaily")
+            let format = DateFormatter()
+            format.dateFormat = "MM_dd_yyyy"
+            UserDefaults.standard.set(format.string(from: Date.now), forKey: "lastPuzzleDate")
         }
     }
     

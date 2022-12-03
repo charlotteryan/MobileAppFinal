@@ -29,10 +29,11 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //FIREBASE TESTING LINES
-        UserDefaults.standard.set(nil, forKey: "Username")
-
-
+//        UserDefaults.standard.set(nil, forKey: "Username")
+        
         usernameSetup()
+        checkDate()
+        createTimer()
         fetchErrorMessage.isHidden = true
     }
     
@@ -180,8 +181,8 @@ class HomeViewController: UIViewController {
             minutes-=1
             seconds = 59
         }
-        else {
-            seconds-=1
+        else{
+            seconds -= 1
         }
         if minutes == -1 {
             minutes=59
@@ -204,5 +205,29 @@ class HomeViewController: UIViewController {
             stringHours = "0" + stringHours
         }
         timerUntilNextPuzzle.text = stringHours + " : " + stringMin + " : " + stringSec
+        
+        if(minutes == 0 && seconds == 0 && hours == 0){
+            UserDefaults.standard.set(false, forKey: "completedDaily")
+            playTodayButton.isHidden = false
+            timerUntilNextPuzzle.isHidden = true
+            timeUntilNextPuzzle.isHidden = true
+        }
+    }
+    
+    func checkDate(){
+        let completedPuzzle = UserDefaults.standard.bool(forKey: "completedDaily")
+        if(completedPuzzle){
+            let format = DateFormatter()
+            format.dateFormat = "MM_dd_yyyy"
+            let dateString = format.string(from: Date.now)
+            let lastPuzzleDate = UserDefaults.standard.string(forKey: "lastPuzzleDate")
+            if (dateString != lastPuzzleDate){
+                UserDefaults.standard.set(false, forKey: "completedDaily")
+            }
+            print("DATES")
+            print(lastPuzzleDate)
+            print(dateString)
+        }
+        
     }
 }
