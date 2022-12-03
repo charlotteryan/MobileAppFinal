@@ -28,6 +28,26 @@ class MyInfoViewController: UIViewController {
     //Change username button and alert popup
     @IBAction func changeUsernameButton(_ sender: Any) {
         if usernameText.text != nil{
+            
+            //Checks for if Username is already in database
+            let Usernames = ref.child("Users").queryOrdered(byChild: "username").queryEqual(toValue: usernameText.text)
+
+            Usernames.observeSingleEvent(of: .value, with: { (snapshot) in
+
+                print(snapshot)
+                if snapshot.exists() {
+
+                    print("Username already exists")
+
+                } else {
+
+                    print("Username doesn't already exist")
+
+                }
+
+            }, withCancel: nil)
+            
+        
             print(ref.child("Users/\(UIDevice.current.identifierForVendor!.uuidString)/username"))
             ref.child("Users/\(UIDevice.current.identifierForVendor!.uuidString)/username").setValue(usernameText.text)
             currentUsername = usernameText.text
