@@ -26,6 +26,7 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     var fromHome = true // Tells us where to return after we win
     var viewTitle = "Puzzle"
+    var dailyPuzzleVC = false
     
     var unsolvedBoard = ".23458679456179238789236145241365897367892451895714362632987514578641923914523786" // default board -- replace in fetch data
     var solvedBoard = "123458679456179238789236145241365897367892451895714362632987514578641923914523786"
@@ -358,6 +359,7 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     // Prepare for segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        var winTime = ""
         if (segue.identifier == "puzzleToWin") {
             guard let winVC = segue.destination as? WinViewController else {return}
             
@@ -374,9 +376,16 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
                 stringMin = "0" + stringMin
             }
             winVC.time = "\(stringMin):\(stringSec)"
+            winTime = "\(stringMin):\(stringSec)"
             
             // Tell win screen if from homepage or past puzzles
             winVC.fromHome = self.fromHome
+        }
+        
+        //Adding User to leaderBoard
+        if(dailyPuzzleVC){
+            let username = UserDefaults.standard.string(forKey: "Username") ?? "sudokDEFAULT"
+            ref.child("LeaderBoard").child(username).setValue(["Score": winTime])
         }
     }
     

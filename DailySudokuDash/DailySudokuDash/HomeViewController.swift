@@ -94,7 +94,8 @@ class HomeViewController: UIViewController {
             puzzleVC.unsolvedBoard = unsolvedBoard
             
             puzzleVC.viewTitle = longDate
-            puzzleVC.fromHome = true 
+            puzzleVC.fromHome = true
+            puzzleVC.dailyPuzzleVC = true
         }
         else if (segue.identifier == "homeToEasyPuzzle") {
             guard let puzzleVC = segue.destination as? PuzzleViewController else {return}
@@ -102,6 +103,7 @@ class HomeViewController: UIViewController {
             // Use default board -- only 1 square missing
             puzzleVC.fromHome = true
             puzzleVC.viewTitle = "Easy Puzzle for Testing"
+            puzzleVC.dailyPuzzleVC = true
         }
     }
     

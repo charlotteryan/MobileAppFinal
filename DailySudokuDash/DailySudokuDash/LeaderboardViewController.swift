@@ -86,11 +86,9 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
     
             for snap in snapshot.children {
 
-                print((snap as! DataSnapshot).key)
                 self.myArray.append((snap as! DataSnapshot).key)
                 let scoreDict = (snap as! DataSnapshot).value as? NSDictionary
-                let score = scoreDict?["Score"] as? Int ?? 0
-                print(score)
+                let score = scoreDict?["Score"] as? String ?? "NA"
                 self.myTimes.append(String(score))
             }
             
