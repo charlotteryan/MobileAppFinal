@@ -82,6 +82,7 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
     // ADD TIME + FLASHES RED
     func addTime() {
         minutes += 1
+        fireTimer()
         self.timerLabel.textColor = .red
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
             // perform your task here...
@@ -348,6 +349,7 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
         for i in 0...puzzleData.count-1 {
             if (puzzleData[i].value != puzzleData[i].solvedValue) {
                 // TODO: add penalty + message on screen
+                addTime()
                 print("incorrect board")
                 return
             }
