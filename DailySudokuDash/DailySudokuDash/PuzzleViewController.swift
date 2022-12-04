@@ -26,7 +26,6 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     var fromHome = true // Tells us where to return after we win
     var viewTitle = "Puzzle"
-    var dailyPuzzleVC = false
     
     var unsolvedBoard = ".23458679456179238789236145241365897367892451895714362632987514578641923914523786" // default board -- replace in fetch data
     var solvedBoard = "123458679456179238789236145241365897367892451895714362632987514578641923914523786"
@@ -65,6 +64,21 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
         else {
             seconds+=1
         }
+        timerLabel.text = timeToString(seconds: seconds, minutes: minutes)
+    }
+    
+    // ADD TIME + FLASHES RED
+    func addTime() {
+        minutes += 1
+        fireTimer()
+        self.timerLabel.textColor = .red
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+            self.timerLabel.textColor = .black
+        })
+    }
+    
+    // Takes in seconds, returns string in format "xx:xx"
+    func timeToString(seconds: Int, minutes: Int) -> String {
         var stringSec = String(describing: seconds)
         var stringMin = String(describing: minutes)
         if seconds == 60 {
@@ -76,19 +90,7 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
         if minutes < 10{
             stringMin = "0" + stringMin
         }
-        timerLabel.text = stringMin + " : " + stringSec
-    }
-    
-    // ADD TIME + FLASHES RED
-    func addTime() {
-        minutes += 1
-        fireTimer()
-        self.timerLabel.textColor = .red
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-            // perform your task here...
-            print("Async after 3 seconds")
-            self.timerLabel.textColor = .black
-        })
+        return stringMin + ":" + stringSec
     }
     
     // *********************
@@ -171,6 +173,17 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
             self.collectionView.reloadData()
         }
     }
+    
+    // Fill in all puzzle squares with correct solution
+    @IBAction func finishPuzzle(_ sender: Any) {
+        for i in 0...puzzleData.count-1 {
+            puzzleData[i].value = puzzleData[i].solvedValue
+        }
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+    }
+    
     
     
     // ***********************
@@ -265,7 +278,6 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     // Highlight the cells in the selected row, column, and square
     func highlightNearbyCells() {
-        print("highlighting")
         // unhighlight any currently highlighted cells
         for i in highlightedCells {
             puzzleData[i].isHighlighted = false
@@ -274,10 +286,8 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
         // remove from puzzle data first
         
         guard let selectedCellPath = selectedCellPath else {
-            print("no selected cell")
             return
         }
-        print("start finding cells to highlight")
         let selectedIndex = selectedCellPath.row
         let row = (selectedIndex / 9)
         let col = selectedIndex % 9
@@ -330,7 +340,6 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func readPuzzleData() {
-        print("In puzzle is \(unsolvedBoard)")
         let boardData = zip(unsolvedBoard, solvedBoard)
         for (unsolved, solved) in boardData {
             if let solvedVal = solved.wholeNumberValue {
@@ -348,52 +357,65 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBAction func checkBoard(_ sender: Any) {
         for i in 0...puzzleData.count-1 {
             if (puzzleData[i].value != puzzleData[i].solvedValue) {
-                // TODO: add penalty + message on screen
+                // incorrect submission
                 addTime()
-                print("incorrect board")
+                UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "incorrectPuzzleSubmissions") + 1, forKey: "incorrectPuzzleSubmissions")
                 return
             }
         
         }
         
+        // Daily puzzle
+        if (fromHome) {
+            print("From home, should do stuff")
+            let timeString = timeToString(seconds: seconds, minutes: minutes)
+            
+            // Adding User to leaderBoard
+            let username = UserDefaults.standard.string(forKey: "username") ?? "sudokDEFAULT"
+            ref.child("LeaderBoard").child(username).setValue(["Score": timeString])
+            
+            let format = DateFormatter()
+            format.dateFormat = "MM_dd_yyyy"
+            let yesterday = format.string(from: Calendar.current.date(byAdding: .day, value: -1, to: Date.now) ?? Date.now)
+            let today = format.string(from: Date.now)
+            
+            if let prevLastDate = UserDefaults.standard.string(forKey: "lastPuzzleDate") {
+                if (prevLastDate == yesterday) {
+                    UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "dailyPuzzleStreak") + 1, forKey: "dailyPuzzleStreak")
+                }
+                else {
+                    UserDefaults.standard.set(1, forKey: "dailyPuzzleStreak") // reset to 0
+                }
+            }
+            else {
+                UserDefaults.standard.set(1, forKey: "dailyPuzzleStreak") // reset to 1
+            }
+            
+            UserDefaults.standard.set(today, forKey: "lastPuzzleDate")
+            UserDefaults.standard.set(timeString, forKey: "todaysTime")
+        }
+        
+        UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "totalSolvedPuzzles") + 1, forKey: "totalSolvedPuzzles")
+        UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "totalPuzzleTime") + (60 * minutes) + seconds, forKey: "totalPuzzleTime")
+        
+        UserDefaults.standard.set(true, forKey: "completedDaily")
+        
+        
+        // Go to Win Screen
         self.performSegue(withIdentifier: "puzzleToWin", sender: sender)
     }
     
     // Prepare for segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        var winTime = ""
         if (segue.identifier == "puzzleToWin") {
             guard let winVC = segue.destination as? WinViewController else {return}
             
-            // Convert seconds and minutes into strings
-            var stringSec = String(describing: seconds)
-            var stringMin = String(describing: minutes)
-            if seconds == 60 {
-                stringSec = "00"
-            }
-            if seconds < 10{
-                stringSec = "0" + String(describing: seconds)
-            }
-            if minutes < 10{
-                stringMin = "0" + stringMin
-            }
-            winVC.time = "\(stringMin):\(stringSec)"
-            winTime = "\(stringMin):\(stringSec)"
+            winVC.time = timeToString(seconds: seconds, minutes: minutes)
             
             // Tell win screen if from homepage or past puzzles
             winVC.fromHome = self.fromHome
         }
         
-        //Adding User to leaderBoard
-        if(dailyPuzzleVC){
-            let username = UserDefaults.standard.string(forKey: "Username") ?? "sudokDEFAULT"
-            ref.child("LeaderBoard").child(username).setValue(["Score": winTime])
-            
-            UserDefaults.standard.set(true, forKey: "completedDaily")
-            let format = DateFormatter()
-            format.dateFormat = "MM_dd_yyyy"
-            UserDefaults.standard.set(format.string(from: Date.now), forKey: "lastPuzzleDate")
-        }
     }
     
     

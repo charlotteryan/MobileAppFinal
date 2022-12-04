@@ -20,6 +20,7 @@ class HomeViewController: UIViewController {
     var minutes:Int = 0
     var seconds:Int = 0
     
+    @IBOutlet weak var todaysTime: UILabel!
     @IBOutlet weak var fetchErrorMessage: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var playTodayButton: UIButton!
@@ -29,12 +30,13 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //FIREBASE TESTING LINES
-//        UserDefaults.standard.set(nil, forKey: "Username")
+//        UserDefaults.standard.set(nil, forKey: "username")
         
         usernameSetup()
         checkDate()
         createTimer()
         fetchErrorMessage.isHidden = true
+//        UserDefaults.standard.removeObject(forKey: "lastPuzzleDate")
     }
     
     
@@ -70,10 +72,6 @@ class HomeViewController: UIViewController {
         self.performSegue(withIdentifier: "homeToPastPuzzles", sender: sender)
     }
     
-    @IBAction func clickTestPuzzle(_ sender: Any) {
-        self.performSegue(withIdentifier: "homeToEasyPuzzle", sender: sender)
-    }
-    
     // Hide navigation bar -- don't need nav bar on home screen
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
@@ -82,12 +80,15 @@ class HomeViewController: UIViewController {
             playTodayButton.isHidden = false
             timeUntilNextPuzzle.isHidden = true
             timerUntilNextPuzzle.isHidden = true
+            todaysTime.isHidden = true
             createTimer()
         }
-        else{
+        else {
             playTodayButton.isHidden = true
             timeUntilNextPuzzle.isHidden = false
             timerUntilNextPuzzle.isHidden = false
+            todaysTime.isHidden = false
+            todaysTime.text = "You solved today's puzzle in \( UserDefaults.standard.string(forKey: "todaysTime") ?? "Error")"
         }
     }
     
@@ -111,15 +112,6 @@ class HomeViewController: UIViewController {
             
             puzzleVC.viewTitle = longDate
             puzzleVC.fromHome = true
-            puzzleVC.dailyPuzzleVC = true
-        }
-        else if (segue.identifier == "homeToEasyPuzzle") {
-            guard let puzzleVC = segue.destination as? PuzzleViewController else {return}
-            
-            // Use default board -- only 1 square missing
-            puzzleVC.fromHome = true
-            puzzleVC.viewTitle = "Easy Puzzle for Testing"
-            puzzleVC.dailyPuzzleVC = true
         }
     }
     
@@ -134,8 +126,8 @@ class HomeViewController: UIViewController {
     
             ref.child("Boards/" + dateString).observeSingleEvent(of: .value, with: { snapshot in
                 let value = snapshot.value as? NSDictionary
-                self.solvedBoard = value?["solvedBoard"] as? String ?? "................................................................................."
-                self.unsolvedBoard = value?["unsolvedBoard"] as? String ?? "................................................................................."
+                self.solvedBoard = value?["solvedBoard"] as? String ?? "123458679456179238789236145241365897367892451895714362632987514578641923914523786"
+                self.unsolvedBoard = value?["unsolvedBoard"] as? String ?? ".23458679456179238789236145241365897367892451895714362632987514578641923914523786"
                 completionHandler(true)
             })
             { error in
@@ -146,14 +138,18 @@ class HomeViewController: UIViewController {
     
     func usernameSetup(){
         //checking if there is already a username saved, if not, auto-generating random username
-        if UserDefaults.standard.string(forKey: "Username") == nil{
+        if UserDefaults.standard.string(forKey: "username") == nil{
             let usernameInt = Int.random(in: 1..<999999)
             var username = "SudokuLover"
             username = username+"\(usernameInt)"
-            UserDefaults.standard.set(username, forKey: "Username")
-            ref.child("Users").child(UIDevice.current.identifierForVendor!.uuidString).setValue(["username": username, "averageTime": 0, "mistakesMade": 0, "puzzleStreak": 0, "puzzlesSolved": 0])
+            UserDefaults.standard.set(username, forKey: "username")
+            ref.child("Users").child(UIDevice.current.identifierForVendor!.uuidString).setValue(["username": username])
             
-            UserDefaults.standard.set(false, forKey: "completedDaily")
+            UserDefaults.standard.set(0, forKey: "dailyPuzzleStreak")
+            UserDefaults.standard.set(0, forKey: "totalSolvedPuzzles")
+            UserDefaults.standard.set(0, forKey: "incorrectPuzzleSubmissions")
+            UserDefaults.standard.set(0, forKey: "totalPuzzleTime") // used for avg time
+            // TODO: remove mentions of completedDaily, instead use lastDayPlayed
         }
     }
     
@@ -224,9 +220,6 @@ class HomeViewController: UIViewController {
             if (dateString != lastPuzzleDate){
                 UserDefaults.standard.set(false, forKey: "completedDaily")
             }
-            print("DATES")
-            print(lastPuzzleDate)
-            print(dateString)
         }
         
     }

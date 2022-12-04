@@ -22,9 +22,6 @@ class MyInfoViewController: UIViewController {
     var currentUsername = UserDefaults.standard.string(forKey: "Username")
     
     
-    //TODO: make the username display in the other view controllers wherever needed
-    //TODO: fetch data from database to update stats
-    
     //Change username button and alert popup
     @IBAction func changeUsernameButton(_ sender: Any) {
         if usernameText.text != nil{
@@ -58,9 +55,36 @@ class MyInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        usernameSetup()
         // Do any additional setup after loading the view.
+        usernameSetup()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        puzzleStreakText.text = String(UserDefaults.standard.integer(forKey: "dailyPuzzleStreak"))
+        totalSolvedPuzzlesText.text = String(UserDefaults.standard.integer(forKey: "totalSolvedPuzzles"))
+        mistakesMadeText.text = String(UserDefaults.standard.integer(forKey: "incorrectPuzzleSubmissions"))
+        if (UserDefaults.standard.integer(forKey: "totalSolvedPuzzles") > 0) {
+            let avgSeconds = UserDefaults.standard.integer(forKey: "totalPuzzleTime") / UserDefaults.standard.integer(forKey: "totalSolvedPuzzles")
+            
+            let minutes = avgSeconds / 60
+            let seconds = avgSeconds - (60 * minutes)
+            var stringSec = String(describing: seconds)
+            var stringMin = String(describing: minutes)
+            if seconds == 60 {
+                stringSec = "00"
+            }
+            if seconds < 10{
+                stringSec = "0" + String(describing: seconds)
+            }
+            if minutes < 10{
+                stringMin = "0" + stringMin
+            }
+            let timeString = stringMin + ":" + stringSec
+            
+            averageTimeText.text = timeString
+        }
+    }
+    
     //displays an alert for when the user presses the change name button
     func usernameChangeAlert(){
         let alertController = UIAlertController(title: "", message:
@@ -80,18 +104,9 @@ class MyInfoViewController: UIViewController {
     
     
     //setting up username, checks if there is already a username saved first. If not, it auto generates one and saves that. If there is one saved then it just loads that
+    // TODO: what is this code actually doing? Why not just load the data in directly?
     func usernameSetup(){
         currentUsername = UserDefaults.standard.string(forKey: "Username")
         usernameText.text = UserDefaults.standard.string(forKey: "Username")
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
