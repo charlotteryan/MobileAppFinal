@@ -48,6 +48,11 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
         cell.num.text = String(describing: indexPath.row+1) + ". "
         cell.name.text = myArray[indexPath.row]
         cell.time.text = myTimes[indexPath.row]
+        
+        if (myArray[indexPath.row] == UserDefaults.standard.string(forKey: "username")) {
+            self.positionLabel.text = String(indexPath.row + 1)
+        }
+        
         return cell
     }
     
@@ -115,7 +120,6 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
                 i += 1
             }
             if (foundIndex > 0) {
-                self.positionLabel.text = String(foundIndex)
                 self.positionTitleLabel.isHidden = false
             }
             
