@@ -81,7 +81,6 @@ class HomeViewController: UIViewController {
             timeUntilNextPuzzle.isHidden = true
             timerUntilNextPuzzle.isHidden = true
             todaysTime.isHidden = true
-            createTimer()
         }
         else {
             playTodayButton.isHidden = true
