@@ -115,26 +115,26 @@ class HomeViewController: UIViewController {
         }
     }
     
-        // Fetch the boards from Firebase
-        func getBoards(date: Date, completionHandler: @escaping(Bool) -> Void) {
-            // Get today's date as a string
-            let format = DateFormatter()
-            format.dateFormat = "MM_dd_yyyy"
-            let dateString = format.string(from: Date.now) // used to fetch data from Firebase
-            format.dateFormat = "MMMM d, yyyy"
-            self.longDate = format.string(from: Date.now) // used for title of puzzle page
-    
-            ref.child("Boards/" + dateString).observeSingleEvent(of: .value, with: { snapshot in
-                let value = snapshot.value as? NSDictionary
-                self.solvedBoard = value?["solvedBoard"] as? String ?? "123458679456179238789236145241365897367892451895714362632987514578641923914523786"
-                self.unsolvedBoard = value?["unsolvedBoard"] as? String ?? ".23458679456179238789236145241365897367892451895714362632987514578641923914523786"
-                completionHandler(true)
-            })
-            { error in
-                print(error.localizedDescription)
-                completionHandler(false)
-            }
+    // Fetch the boards from Firebase
+    func getBoards(date: Date, completionHandler: @escaping(Bool) -> Void) {
+        // Get today's date as a string
+        let format = DateFormatter()
+        format.dateFormat = "MM_dd_yyyy"
+        let dateString = format.string(from: date) // used to fetch data from Firebase
+        format.dateFormat = "MMMM d, yyyy"
+        self.longDate = format.string(from: date) // used for title of puzzle page
+
+        ref.child("Boards/" + dateString).observeSingleEvent(of: .value, with: { snapshot in
+            let value = snapshot.value as? NSDictionary
+            self.solvedBoard = value?["solvedBoard"] as? String ?? "123458679456179238789236145241365897367892451895714362632987514578641923914523786"
+            self.unsolvedBoard = value?["unsolvedBoard"] as? String ?? ".23458679456179238789236145241365897367892451895714362632987514578641923914523786"
+            completionHandler(true)
+        })
+        { error in
+            print(error.localizedDescription)
+            completionHandler(false)
         }
+    }
     
     func usernameSetup(){
         //checking if there is already a username saved, if not, auto-generating random username

@@ -125,12 +125,34 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="inline" translatesAutoresizingMaskIntoConstraints="NO" id="eUD-hp-6pK">
-                                <rect key="frame" x="0.0" y="214" width="390" height="375"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KIi-Td-t8I">
+                                <rect key="frame" x="56" y="613" width="278" height="52"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" cornerStyle="capsule">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="Play Puzzle">
+                                            <attributes>
+                                                <font key="NSFont" size="24" name="Helvetica"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="clickPlay:" destination="Ecs-hN-9uy" eventType="touchUpInside" id="4OO-a7-yij"/>
+                                    <action selector="clickPlayPast:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Y7k-Fg-uky"/>
+                                </connections>
+                            </button>
+                            <datePicker contentMode="center" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="inline" translatesAutoresizingMaskIntoConstraints="NO" id="eUD-hp-6pK">
+                                <rect key="frame" x="28" y="202" width="334" height="358"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <date key="minimumDate" timeIntervalSinceReferenceDate="688989600">
-                                    <!--2022-11-01 10:00:00 +0000-->
+                                <date key="minimumDate" timeIntervalSinceReferenceDate="691585200">
+                                    <!--2022-12-01 11:00:00 +0000-->
                                 </date>
+                                <connections>
+                                    <action selector="selectedNewDate:" destination="Ecs-hN-9uy" eventType="valueChanged" id="nhD-ag-Sn3"/>
+                                </connections>
                             </datePicker>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="dCS-aD-MdM"/>
@@ -138,7 +160,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="nla-gA-e9w"/>
                     <connections>
-                        <segue destination="4XI-1d-tND" kind="show" id="bI1-2f-o0e"/>
+                        <outlet property="datePicker" destination="eUD-hp-6pK" id="g9H-Mg-dj7"/>
+                        <segue destination="4XI-1d-tND" kind="show" identifier="pastToPuzzle" id="bI1-2f-o0e"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pyF-vf-9TH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
