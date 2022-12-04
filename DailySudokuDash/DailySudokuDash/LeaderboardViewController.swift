@@ -13,9 +13,13 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var positionTitleLabel: UILabel!
     @IBOutlet weak var positionLabel: UILabel!
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    var myArray = ["Charlotte", "Madeline", "Ian", "Daniel", "Jake", "Lindsay", "Abby", "Mike", "James", "Brody", "Lydia"]
+    var myTimes = ["0.57", "0.99", "1.31", "1.56", "2.13", "2.59", "3.10", "3.59", "12.50", "12.59", "15.10"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +31,7 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewWillAppear(_ animated: Bool) {
         loadLeaderBoardData()
-        usernameLabel.text = UserDefaults.standard.string(forKey: "Username")
+        usernameLabel.text = UserDefaults.standard.string(forKey: "username")
     }
     
     func setupTableView() {
@@ -87,23 +91,30 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
             self.myArray = []
     
             var i = 1
+            var foundIndex = -1
             for snap in snapshot.children {
 
                 self.myArray.append((snap as! DataSnapshot).key)
                 print((snap as! DataSnapshot).key)
-                print(UserDefaults.standard.string(forKey: "Username"))
-                if((snap as! DataSnapshot).key == UserDefaults.standard.string(forKey: "Username")){
+                print(UserDefaults.standard.string(forKey: "username"))
+                if((snap as! DataSnapshot).key == UserDefaults.standard.string(forKey: "username")){
                     print("FOUND USER")
-                    self.positionLabel.text = String(i)
+                    foundIndex = i
                 }
                 else{
                     print("DID NOT FIND USER")
+                    self.positionTitleLabel.isHidden = true
                 }
                 let scoreDict = (snap as! DataSnapshot).value as? NSDictionary
                 let score = scoreDict?["Score"] as? String ?? "NA"
                 self.myTimes.append(String(score))
                 i += 1
             }
+            if (foundIndex > 0) {
+                self.positionLabel.text = String(foundIndex)
+                self.positionTitleLabel.isHidden = false
+            }
+            
             completionHandler(true)
         })
         { error in
@@ -111,10 +122,6 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
             completionHandler(false)
         }
     }
-    
-  
-    var myArray = ["Charlotte", "Madeline", "Ian", "Daniel", "Jake", "Lindsay", "Abby", "Mike", "James", "Brody", "Lydia"]
-    var myTimes = ["0.57", "0.99", "1.31", "1.56", "2.13", "2.59", "3.10", "3.59", "12.50", "12.59", "15.10"]
     
 
     /*

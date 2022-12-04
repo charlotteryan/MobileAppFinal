@@ -19,7 +19,7 @@ class MyInfoViewController: UIViewController {
     
     @IBOutlet weak var usernameText: UITextField!
     
-    var currentUsername = UserDefaults.standard.string(forKey: "Username")
+    var currentUsername = UserDefaults.standard.string(forKey: "username")
     
     
     //Change username button and alert popup
@@ -41,8 +41,8 @@ class MyInfoViewController: UIViewController {
                     print("Username doesn't already exist")
                     self.ref.child("Users/\(UIDevice.current.identifierForVendor!.uuidString)/username").setValue(self.usernameText.text)
                     self.currentUsername = self.usernameText.text
-                    UserDefaults.standard.set(self.usernameText.text, forKey: "Username")
-                    self.usernameText.text = UserDefaults.standard.string(forKey: "Username")
+                    UserDefaults.standard.set(self.usernameText.text, forKey: "username")
+                    self.usernameText.text = UserDefaults.standard.string(forKey: "username")
                     self.usernameChangeAlert()
 
                 }
@@ -106,7 +106,7 @@ class MyInfoViewController: UIViewController {
     //setting up username, checks if there is already a username saved first. If not, it auto generates one and saves that. If there is one saved then it just loads that
     // TODO: what is this code actually doing? Why not just load the data in directly?
     func usernameSetup(){
-        currentUsername = UserDefaults.standard.string(forKey: "Username")
-        usernameText.text = UserDefaults.standard.string(forKey: "Username")
+        currentUsername = UserDefaults.standard.string(forKey: "username")
+        usernameText.text = UserDefaults.standard.string(forKey: "username")
     }
 }

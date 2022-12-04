@@ -31,12 +31,12 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         //FIREBASE TESTING LINES
 //        UserDefaults.standard.set(nil, forKey: "username")
+//        UserDefaults.standard.removeObject(forKey: "lastPuzzleDate")
         
         usernameSetup()
         checkDate()
         createTimer()
         fetchErrorMessage.isHidden = true
-//        UserDefaults.standard.removeObject(forKey: "lastPuzzleDate")
     }
     
     

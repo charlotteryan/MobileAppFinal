@@ -777,6 +777,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="i5f-cy-pON" id="9dN-Va-GPV"/>
                         <outlet property="positionLabel" destination="SSh-IX-Xsr" id="vD5-d4-ksh"/>
+                        <outlet property="positionTitleLabel" destination="PLo-lA-vbA" id="gvK-No-z6t"/>
                         <outlet property="tableView" destination="LYJ-qy-XvA" id="AE3-vc-Yk3"/>
                         <outlet property="usernameLabel" destination="A8C-gt-ded" id="XmI-LG-Ktf"/>
                     </connections>
