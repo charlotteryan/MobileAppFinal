@@ -388,7 +388,7 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
             
             // Adding User to leaderBoard
             let username = UserDefaults.standard.string(forKey: "username") ?? "sudokDEFAULT"
-            ref.child("LeaderBoard").child(username).setValue(["Score": timeString])
+            ref.child("Users").child(UIDevice.current.identifierForVendor!.uuidString).setValue(["todaysTime": timeString, "username":username])
             
             let format = DateFormatter()
             format.dateFormat = "MM_dd_yyyy"

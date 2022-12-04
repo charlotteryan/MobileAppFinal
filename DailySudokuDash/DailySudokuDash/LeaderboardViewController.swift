@@ -83,7 +83,7 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
     func fetchLeaderBoard(completionHandler: @escaping(Bool) -> Void){
         print("PRINTING BY SCORE")
         let ref = Database.database().reference()
-        let usersinorder = ref.child("LeaderBoard").queryOrdered(byChild: "Score")
+        let usersinorder = ref.child("Users").queryOrdered(byChild: "todaysTime")
         
         usersinorder.observeSingleEvent(of: .value, with:{ (snapshot: DataSnapshot) in
             
@@ -93,11 +93,8 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
             var i = 1
             var foundIndex = -1
             for snap in snapshot.children {
-
-                self.myArray.append((snap as! DataSnapshot).key)
-                print((snap as! DataSnapshot).key)
-                print(UserDefaults.standard.string(forKey: "username"))
-                if((snap as! DataSnapshot).key == UserDefaults.standard.string(forKey: "username")){
+                
+                if((snap as! DataSnapshot).key == UIDevice.current.identifierForVendor?.uuidString){
                     print("FOUND USER")
                     foundIndex = i
                 }
@@ -105,9 +102,16 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
                     print("DID NOT FIND USER")
                     self.positionTitleLabel.isHidden = true
                 }
-                let scoreDict = (snap as! DataSnapshot).value as? NSDictionary
-                let score = scoreDict?["Score"] as? String ?? "NA"
-                self.myTimes.append(String(score))
+                let userDict = (snap as! DataSnapshot).value as? NSDictionary
+                let username = userDict?["username"] as? String ?? "NA"
+                let score = userDict?["todaysTime"] as? String ?? "NA"
+                if(score != ""){
+                    self.myArray.append(String(username))
+                    self.myTimes.append(String(score))
+                }
+                else{
+                    foundIndex = -1
+                }
                 i += 1
             }
             if (foundIndex > 0) {

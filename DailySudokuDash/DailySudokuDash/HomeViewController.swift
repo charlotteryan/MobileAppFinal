@@ -143,7 +143,7 @@ class HomeViewController: UIViewController {
             var username = "SudokuLover"
             username = username+"\(usernameInt)"
             UserDefaults.standard.set(username, forKey: "username")
-            ref.child("Users").child(UIDevice.current.identifierForVendor!.uuidString).setValue(["username": username])
+            ref.child("Users").child(UIDevice.current.identifierForVendor!.uuidString).setValue(["username": username, "todaysTime": ""])
             
             UserDefaults.standard.set(0, forKey: "dailyPuzzleStreak")
             UserDefaults.standard.set(0, forKey: "totalSolvedPuzzles")
