@@ -328,6 +328,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Hint"/>
+                                <connections>
+                                    <action selector="giveHint:" destination="4XI-1d-tND" eventType="touchUpInside" id="hmH-qA-GVT"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KZU-82-4jU">
                                 <rect key="frame" x="295" y="125" width="79" height="31"/>

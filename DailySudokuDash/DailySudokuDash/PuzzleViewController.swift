@@ -174,6 +174,26 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
     
+    @IBAction func giveHint(_ sender: Any) {
+        //Checks if the board is already complete, adds in penalty if not
+        if (boardComplete()) {
+            return // board is correct, cannot give hint
+        }
+        while (true) {
+            let index = Int.random(in: 0..<puzzleData.count)
+            if(puzzleData[index].value != puzzleData[index].solvedValue){
+                puzzleData[index].value = puzzleData[index].solvedValue
+                puzzleData[index].noteField = ["", "", "", "", "", "", "", "", ""]
+                addTime()
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+                return
+            }
+        }
+    }
+    
+    
     // Fill in all puzzle squares with correct solution
     @IBAction func finishPuzzle(_ sender: Any) {
         for i in 0...puzzleData.count-1 {
@@ -183,7 +203,6 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
             self.collectionView.reloadData()
         }
     }
-    
     
     
     // ***********************
@@ -355,14 +374,11 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     // Check if puzzle solution is correct
     @IBAction func checkBoard(_ sender: Any) {
-        for i in 0...puzzleData.count-1 {
-            if (puzzleData[i].value != puzzleData[i].solvedValue) {
-                // incorrect submission
-                addTime()
-                UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "incorrectPuzzleSubmissions") + 1, forKey: "incorrectPuzzleSubmissions")
-                return
-            }
-        
+        if (!boardComplete()) {
+            // incorrect submission
+            addTime()
+            UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "incorrectPuzzleSubmissions") + 1, forKey: "incorrectPuzzleSubmissions")
+            return
         }
         
         // Daily puzzle
@@ -403,6 +419,16 @@ class PuzzleViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         // Go to Win Screen
         self.performSegue(withIdentifier: "puzzleToWin", sender: sender)
+    }
+    
+    func boardComplete() -> Bool{
+        for i in 0...puzzleData.count-1 {
+            if (puzzleData[i].value != puzzleData[i].solvedValue) {
+                // incorrect submission
+                return false
+            }
+        }
+        return true
     }
     
     // Prepare for segue
